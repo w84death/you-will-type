@@ -6,7 +6,7 @@
 
 [sub_resource type="GDScript" id=1]
 
-script/source = "extends Node2D
+script/source = "
 var player
 var player_bag
 var terrain
@@ -134,8 +134,18 @@ func move_post_anim():
 		move_player(0, 1, SHIFT_X, SHIFT_Y)
 	self.anim.play(\"idle\")"
 
-[node name="main" type="Node2D"]
+[node name="main" type="Control"]
 
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 800.0
+margin/bottom = 600.0
 script/script = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -200,6 +210,11 @@ drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 
 [node name="blur" parent="entities/player/camera" instance=ExtResource( 3 )]
+
+margin/left = -114.0
+margin/top = -70.0
+margin/right = -622.0
+margin/bottom = -466.0
 
 
 [editable path="entities/player"]

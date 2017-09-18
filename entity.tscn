@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
-[ext_resource path="res://sprites/units.png" type="Texture" id=1]
+[ext_resource path="res://sprites/light.png" type="Texture" id=1]
+[ext_resource path="res://sprites/units.png" type="Texture" id=2]
 
 [sub_resource type="GDScript" id=1]
 
@@ -350,12 +351,37 @@ script/script = SubResource( 1 )
 x = 0
 y = 0
 
+[node name="torch" type="Light2D" parent="."]
+
+transform/pos = Vector2( 10, 10 )
+z/z = 10
+z/relative = false
+enabled = true
+editor_only = false
+texture = ExtResource( 1 )
+offset = Vector2( 0, 0 )
+scale = 2.0
+color = Color( 1, 1, 1, 1 )
+energy = 0.25
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = false
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
 [node name="g" type="Node2D" parent="."]
 
 [node name="shadow" type="Sprite" parent="g"]
 
 transform/pos = Vector2( 2, -4 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 centered = false
 vframes = 4
 hframes = 4
@@ -365,7 +391,7 @@ frame = 4
 
 transform/pos = Vector2( 2, -4 )
 z/z = 10
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 centered = false
 vframes = 4
 hframes = 4

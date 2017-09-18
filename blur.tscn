@@ -2,7 +2,7 @@
 
 [ext_resource path="res://sprites/tilt-shift.png" type="Texture" id=1]
 
-[sub_resource type="CanvasItemShader" id=2]
+[sub_resource type="CanvasItemShader" id=1]
 
 _code = {
 "fragment": "uniform texture vignette;
@@ -33,14 +33,14 @@ COLOR.rgb=col;
 "vertex_ofs": 0
 }
 
-[sub_resource type="CanvasItemMaterial" id=3]
+[sub_resource type="CanvasItemMaterial" id=2]
 
-shader/shader = SubResource( 2 )
+shader/shader = SubResource( 1 )
 shader/shading_mode = 1
 
 [node name="blur" type="TextureFrame"]
 
-material/material = SubResource( 3 )
+material/material = SubResource( 2 )
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = true

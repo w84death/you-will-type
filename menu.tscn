@@ -5,7 +5,7 @@
 [ext_resource path="res://letter.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=4]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Control
 
@@ -22,7 +22,7 @@ func start_game():
 	get_tree().change_scene(\"res://game.tscn\")
 "
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 
 font/size = 8
 font/use_mipmaps = true
@@ -58,7 +58,7 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 0.0
 margin/bottom = 0.0
-script/script = SubResource( 2 )
+script/script = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -194,7 +194,7 @@ margin/left = -65.0
 margin/top = -115.0
 margin/right = 65.0
 margin/bottom = -107.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "p1x presents"
 align = 1
@@ -213,7 +213,7 @@ margin/left = -65.0
 margin/top = -26.0
 margin/right = 65.0
 margin/bottom = -17.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "HIGH SCORES"
 align = 1
@@ -232,7 +232,7 @@ margin/left = -34.0
 margin/top = -10.0
 margin/right = -27.0
 margin/bottom = 86.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "1.
 2.
@@ -258,7 +258,7 @@ margin/left = -15.0
 margin/top = -10.0
 margin/right = 13.0
 margin/bottom = 122.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "9999
 8888
@@ -284,7 +284,7 @@ margin/left = 20.0
 margin/top = -10.0
 margin/right = 41.0
 margin/bottom = 130.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "AAA
 BBB
@@ -302,7 +302,7 @@ max_lines_visible = -1
 
 [node name="press" type="Label" parent="CenterContainer/Control/Node2D 2"]
 
-visibility/opacity = 0.869069
+visibility/opacity = 0.719911
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -311,7 +311,7 @@ margin/left = -65.0
 margin/top = 128.0
 margin/right = 65.0
 margin/bottom = 136.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "press any key to start"
 align = 1
