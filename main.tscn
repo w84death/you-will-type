@@ -16,6 +16,7 @@ var anim
 const SHIFT_X = 10
 const SHIFT_Y = 13
 const GROUP_LETTER = \"letter\"
+const GROUP_SNAKES = \"snakes\"
 var letter = preload(\"res://letter.tscn\")
 var snake = preload(\"res://snake.tscn\")
 var mosqito = preload(\"res://komar.tscn\")
@@ -42,6 +43,7 @@ func spawn_enemies():
 	for cord in cords:
 		var new_snake = self.snake.instance()
 		new_snake.set_position(cord[0], cord[1])
+		new_snake.add_to_group(self.GROUP_SNAKES)
 		self.entities.add_child(new_snake)
 
 func spawn_letters(player):
@@ -69,8 +71,13 @@ func randomize_letters(player):
 
 func get_move(x, y, terrain, skip_shift_check = false):
 	if not skip_shift_check and (y % 2 == 0): x+=1
-	return terrain.get_cell(x, y) in self.CANT_MOVE
-
+	var block = terrain.get_cell(x, y) in self.CANT_MOVE
+	if not block:
+		var nodes = get_tree().get_nodes_in_group(self.GROUP_SNAKES)
+		for node in nodes:
+			if Vector2(node.x, node.y) == Vector2(x, y): return true
+	return block
+	
 func check_letters(player, t):
 	var x = player.x
 	var y = player.y
