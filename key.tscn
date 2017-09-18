@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://sprites/selectors.png" type="Texture" id=1]
+[ext_resource path="res://fonts/C&C Red Alert [INET].ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="GDScript" id=4]
+
+script/source = "extends Node2D
+
+export var key = \"A\"
+
+func _ready():
+	self.get_node(\"Label\").set_text(self.key)
+"
+
+[sub_resource type="DynamicFont" id=3]
+
+font/size = 11
+font/use_mipmaps = false
+font/use_filter = false
+font/font = ExtResource( 2 )
+
+[node name="key" type="Node2D"]
+
+z/z = 5
+script/script = SubResource( 4 )
+key = "A"
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( -7.15303, -3.9242 )
+texture = ExtResource( 1 )
+centered = false
+region = true
+region_rect = Rect2( 20, 0, 20, 22 )
+
+[node name="Label" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 1.0
+margin/top = 0.0
+margin/right = 8.0
+margin/bottom = 12.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "M"
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+
