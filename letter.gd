@@ -8,6 +8,7 @@ var letters_temp
 var letter_label
 
 func _ready():
+	randomize()
 	self.anim = self.get_node('anim')
 	var r = rand_range(0, self.anim.get_current_animation_length())
 	self.anim.seek(r)
