@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://terrain-tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://entity.tscn" type="PackedScene" id=2]
-[ext_resource path="res://sprites/tilt-shift.png" type="Texture" id=3]
+[ext_resource path="res://blur.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
 
@@ -134,42 +134,6 @@ func move_post_anim():
 		move_player(0, 1, SHIFT_X, SHIFT_Y)
 	self.anim.play(\"idle\")"
 
-[sub_resource type="CanvasItemShader" id=2]
-
-_code = {
-"fragment": "uniform texture vignette;
-float radius = 0.0025;
-vec3 col = vec3(0);
-
-col+= texscreen(SCREEN_UV+vec2(-radius,-radius));
-col+= texscreen(SCREEN_UV+vec2(0,-radius));
-col+= texscreen(SCREEN_UV+vec2(radius,-radius));
-
-col+= texscreen(SCREEN_UV+vec2(-radius,0));
-col+= texscreen(SCREEN_UV+vec2(0,0));
-col+= texscreen(SCREEN_UV+vec2(radius,0));
-
-
-col+= texscreen(SCREEN_UV+vec2(-radius,radius));
-col+= texscreen(SCREEN_UV+vec2(0,radius));
-col+= texscreen(SCREEN_UV+vec2(radius,radius));
-
-col/=9.0;
-COLOR.rgb=col;
-
-",
-"fragment_ofs": 0,
-"light": "",
-"light_ofs": 0,
-"vertex": "",
-"vertex_ofs": 0
-}
-
-[sub_resource type="CanvasItemMaterial" id=3]
-
-shader/shader = SubResource( 2 )
-shader/shading_mode = 1
-
 [node name="main" type="Node2D"]
 
 script/script = SubResource( 1 )
@@ -215,6 +179,7 @@ editor/display_folded = true
 [node name="camera" type="Camera2D" parent="entities/player"]
 
 transform/pos = Vector2( -200, -150 )
+transform/scale = Vector2( 0.5, 0.5 )
 z/z = 999
 z/relative = false
 anchor_mode = 0
@@ -234,23 +199,7 @@ drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 
-[node name="blur" type="TextureFrame" parent="entities/player/camera"]
-
-material/material = SubResource( 3 )
-anchor/right = 1
-anchor/bottom = 1
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 0.0
-margin/top = 0.0
-margin/right = -336.0
-margin/bottom = -236.0
-texture = ExtResource( 3 )
-modulate = Color( 0, 0, 0, 1 )
-expand = true
-stretch_mode = 0
+[node name="blur" parent="entities/player/camera" instance=ExtResource( 3 )]
 
 
 [editable path="entities/player"]

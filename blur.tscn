@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://sprites/tilt-shift.png" type="Texture" id=1]
+
+[sub_resource type="CanvasItemShader" id=2]
+
+_code = {
+"fragment": "uniform texture vignette;
+float radius = 0.0025;
+vec3 col = vec3(0);
+
+col+= texscreen(SCREEN_UV+vec2(-radius,-radius));
+col+= texscreen(SCREEN_UV+vec2(0,-radius));
+col+= texscreen(SCREEN_UV+vec2(radius,-radius));
+
+col+= texscreen(SCREEN_UV+vec2(-radius,0));
+col+= texscreen(SCREEN_UV+vec2(0,0));
+col+= texscreen(SCREEN_UV+vec2(radius,0));
+
+
+col+= texscreen(SCREEN_UV+vec2(-radius,radius));
+col+= texscreen(SCREEN_UV+vec2(0,radius));
+col+= texscreen(SCREEN_UV+vec2(radius,radius));
+
+col/=9.0;
+COLOR.rgb=col;
+
+",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+shader/shader = SubResource( 2 )
+shader/shading_mode = 1
+
+[node name="blur" type="TextureFrame"]
+
+material/material = SubResource( 3 )
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = -736.0
+margin/bottom = -536.0
+texture = ExtResource( 1 )
+modulate = Color( 0, 0, 0, 1 )
+expand = true
+stretch_mode = 0
+
+

@@ -1,14 +1,16 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=6 format=1]
 
-[ext_resource path="res://letter.tscn" type="PackedScene" id=1]
-[ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://terrain-tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://blur.tscn" type="PackedScene" id=2]
+[ext_resource path="res://letter.tscn" type="PackedScene" id=3]
+[ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 
 font/size = 8
 font/use_mipmaps = true
 font/use_filter = false
-font/font = ExtResource( 2 )
+font/font = ExtResource( 4 )
 
 [node name="Control" type="Control"]
 
@@ -22,6 +24,9 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 0.0
 margin/bottom = 0.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 
@@ -47,66 +52,93 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 400.0
-margin/top = 300.0
+margin/top = 400.0
 margin/right = 400.0
-margin/bottom = 300.0
+margin/bottom = 400.0
+
+[node name="TileMap" type="TileMap" parent="CenterContainer/Control"]
+
+transform/pos = Vector2( -400, -300 )
+transform/scale = Vector2( 4, 4 )
+mode = 2
+tile_set = ExtResource( 1 )
+cell/size = Vector2( 20, 22 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 20, 0, 0, 13, 0, 0 )
+cell/half_offset = 0
+cell/tile_origin = 1
+cell/y_sort = true
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( -1, 2, -65536, 2, -65535, 4, -65534, 0, -65533, 0, -65532, 5, -65531, 5, -65530, 5, -65529, 9, -65528, 9, -65527, 4, 65535, 2, 0, 2, 1, 5, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 5, 8, 4, 9, 4, 131070, 2, 131071, 4, 65536, 0, 65537, 0, 65538, 0, 65539, 0, 65540, 0, 65541, 0, 65542, 0, 65543, 0, 65544, 4, 65545, 4, 196607, 5, 131072, 4, 131073, 0, 131074, 0, 131075, 0, 131076, 0, 131077, 0, 131078, 0, 131079, 0, 131080, 0, 131081, 9, 262143, 6, 196608, 4, 196609, 0, 196610, 0, 196611, 0, 196612, 0, 196613, 0, 196614, 0, 196615, 0, 196616, 4, 196617, 9, 262144, 7, 262145, 4, 262146, 0, 262147, 1, 262148, 1, 262149, 1, 262150, 1, 262151, 0, 262152, 4, 262153, 4, 393215, 6, 327680, 5, 327681, 0, 327682, 0, 327683, 1, 327684, 1, 327685, 1, 327686, 1, 327687, 0, 327688, 5, 327689, 2, 393216, 5, 393217, 4, 393218, 0, 393219, 1, 393220, 1, 393221, 1, 393222, 1, 393223, 0, 393224, 5, 393225, 5, 393226, 2, 524287, 5, 458752, 4, 458753, 0, 458754, 1, 458755, 1, 458756, 1, 458757, 1, 458758, 0, 458759, 5, 458760, 7, 458761, 2, 589823, 4, 524288, 9, 524289, 4, 524290, 0, 524291, 1, 524292, 1, 524293, 1, 524294, 1, 524295, 0, 524296, 5, 524297, 3, 524298, 3, 655359, 9, 589824, 9, 589825, 0, 589826, 0, 589827, 1, 589828, 1, 589829, 1, 589830, 0, 589831, 5, 589832, 5, 589833, 3, 655360, 9, 655361, 4, 655362, 4, 655363, 0, 655364, 0, 655365, 0, 655366, 0, 655367, 4, 655368, 9, 655369, 3, 720897, 4, 720898, 4, 720899, 0, 720900, 0, 720902, 3, 720903, 3, 720904, 3, 720905, 3 )
+
+[node name="blur" parent="CenterContainer/Control" instance=ExtResource( 2 )]
+
+margin/left = -400.0
+margin/top = -300.0
+margin/right = -400.0
+margin/bottom = -300.0
 
 [node name="Node2D" type="Node2D" parent="CenterContainer/Control"]
 
 transform/pos = Vector2( -347, -266 )
 transform/scale = Vector2( 4, 4 )
 
-[node name="letter" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 18, 12 )
 letter = "y"
 
-[node name="letter1" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter1" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 28, 12 )
 letter = "o"
 
-[node name="letter2" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter2" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 38, 12 )
 letter = "u"
 
-[node name="letter3" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter3" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 58, 12 )
 letter = "w"
 
-[node name="letter4" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter4" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 68, 12 )
 letter = "i"
 
-[node name="letter5" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter5" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 78, 12 )
 letter = "l"
 
-[node name="letter6" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter6" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 88, 12 )
 letter = "l"
 
-[node name="letter7" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter7" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 108, 12 )
 letter = "t"
 
-[node name="letter8" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter8" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 118, 12 )
 letter = "y"
 
-[node name="letter9" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter9" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 128, 12 )
 letter = "p"
 
-[node name="letter10" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+[node name="letter10" parent="CenterContainer/Control/Node2D" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 138, 12 )
 letter = "e"
@@ -122,9 +154,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = -65.0
-margin/top = -125.0
+margin/top = -115.0
 margin/right = 65.0
-margin/bottom = -117.0
+margin/bottom = -107.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "p1x presents"
@@ -141,9 +173,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = -65.0
-margin/top = -30.0
+margin/top = -26.0
 margin/right = 65.0
-margin/bottom = -11.0
+margin/bottom = -7.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "HIGHSCORES
@@ -160,10 +192,10 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = -49.0
-margin/top = 17.0
-margin/right = -34.0
-margin/bottom = 113.0
+margin/left = -39.0
+margin/top = -5.0
+margin/right = -24.0
+margin/bottom = 91.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "1ST
@@ -192,9 +224,7 @@ margin/right = 8.0
 margin/bottom = 113.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "SCORE
-
-9999
+text = "9999
 8888
 7777
 6666
@@ -214,15 +244,13 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 30.0
+margin/left = 20.0
 margin/top = -5.0
-margin/right = 50.0
+margin/right = 40.0
 margin/bottom = 135.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "NAME
-
-AAA
+text = "AAA
 BBB
 CCC
 DDD
@@ -243,9 +271,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = -65.0
-margin/top = -55.0
+margin/top = -58.0
 margin/right = 65.0
-margin/bottom = -47.0
+margin/bottom = -50.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "press any key to start"
