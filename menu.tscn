@@ -1,0 +1,258 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://letter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+
+font/size = 8
+font/use_mipmaps = true
+font/use_filter = false
+font/font = ExtResource( 2 )
+
+[node name="Control" type="Control"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+use_top_left = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Control" type="Control" parent="CenterContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 400.0
+margin/top = 300.0
+margin/right = 400.0
+margin/bottom = 300.0
+
+[node name="Node2D" type="Node2D" parent="CenterContainer/Control"]
+
+transform/pos = Vector2( -347, -266 )
+transform/scale = Vector2( 4, 4 )
+
+[node name="letter" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 18, 12 )
+letter = "y"
+
+[node name="letter1" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 28, 12 )
+letter = "o"
+
+[node name="letter2" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 38, 12 )
+letter = "u"
+
+[node name="letter3" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 58, 12 )
+letter = "w"
+
+[node name="letter4" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 68, 12 )
+letter = "i"
+
+[node name="letter5" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 78, 12 )
+letter = "l"
+
+[node name="letter6" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 88, 12 )
+letter = "l"
+
+[node name="letter7" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 108, 12 )
+letter = "t"
+
+[node name="letter8" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 118, 12 )
+letter = "y"
+
+[node name="letter9" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 128, 12 )
+letter = "p"
+
+[node name="letter10" parent="CenterContainer/Control/Node2D" instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 138, 12 )
+letter = "e"
+
+[node name="Node2D 2" type="Node2D" parent="CenterContainer/Control"]
+
+transform/scale = Vector2( 2, 2 )
+
+[node name="p1x" type="Label" parent="CenterContainer/Control/Node2D 2"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -65.0
+margin/top = -125.0
+margin/right = 65.0
+margin/bottom = -117.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "p1x presents"
+align = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="hiscore" type="Label" parent="CenterContainer/Control/Node2D 2"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -65.0
+margin/top = -30.0
+margin/right = 65.0
+margin/bottom = -11.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "HIGHSCORES
+--------------------------"
+align = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="scores" type="Label" parent="CenterContainer/Control/Node2D 2"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -49.0
+margin/top = 17.0
+margin/right = -34.0
+margin/bottom = 113.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "1ST
+2ND
+3RD
+4TH
+5TH
+6TH
+7TH
+8TH
+9TH"
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="scores1" type="Label" parent="CenterContainer/Control/Node2D 2"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -15.0
+margin/top = -5.0
+margin/right = 8.0
+margin/bottom = 113.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "SCORE
+
+9999
+8888
+7777
+6666
+5555
+4444
+3333
+2222
+1111"
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="scores2" type="Label" parent="CenterContainer/Control/Node2D 2"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 30.0
+margin/top = -5.0
+margin/right = 50.0
+margin/bottom = 135.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "NAME
+
+AAA
+BBB
+CCC
+DDD
+EEE
+FFF
+GGG
+HHH
+III"
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="press" type="Label" parent="CenterContainer/Control/Node2D 2"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -65.0
+margin/top = -55.0
+margin/right = 65.0
+margin/bottom = -47.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "press any key to start"
+align = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+

@@ -1,15 +1,14 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://terrain-tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://entity.tscn" type="PackedScene" id=2]
-[ext_resource path="res://clouds-tileset.tres" type="TileSet" id=3]
+[ext_resource path="res://sprites/tilt-shift.png" type="Texture" id=3]
 
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends Node2D
-
-var clouds
 var player
+var player_bag
 var terrain
 var entities
 var anim
@@ -19,7 +18,6 @@ const GROUP_LETTER = \"letter\"
 const GROUP_SNAKES = \"snakes\"
 var letter = preload(\"res://letter.tscn\")
 var snake = preload(\"res://snake.tscn\")
-var mosqito = preload(\"res://komar.tscn\")
 
 const LETTERS = [
 	'a','b','c','d','e','f','g','h','i',
@@ -28,14 +26,15 @@ const LETTERS = [
 const CANT_MOVE = [-1,0,1,2]
 
 func _ready():
-	self.clouds = get_node(\"clouds\")
 	self.terrain = get_node(\"terrain\")
 	self.entities = get_node(\"entities\")
 	self.player = self.entities.get_node(\"player\")
+	self.player_bag = self.player.get_node(\"g\")
 	self.anim = self.player.get_node(\"anim\")
 	self.anim.connect(\"finished\", self, \"move_post_anim\")
-	spawn_letters(self.player)
+	spawn_letters(self.player_bag)
 	spawn_enemies()
+	self.player.raise()
 	set_process_input(true)
 	
 func spawn_enemies():
@@ -102,12 +101,6 @@ func get_letter_direction(letter):
 	for node in get_tree().get_nodes_in_group(self.GROUP_LETTER):
 		if node.is_visible() and node.letter == letter:
 			return node.direction
-
-func move_clouds(shift = -11):
-	var x = self.clouds.get_pos().x + shift
-	var y = self.clouds.get_pos().y
-	self.clouds.set_pos(Vector2(x, y))
-
 func move_player(x, y, xx, yy):
 	if not(self.player.y % 2 == 0) and not(y == 0): x+=1
 	self.player.x += x
@@ -139,8 +132,43 @@ func move_post_anim():
 		move_player(-1, 1, -SHIFT_X, SHIFT_Y)
 	elif  move == \"move_c\":
 		move_player(0, 1, SHIFT_X, SHIFT_Y)
-	move_clouds()
 	self.anim.play(\"idle\")"
+
+[sub_resource type="CanvasItemShader" id=2]
+
+_code = {
+"fragment": "uniform texture vignette;
+float radius = 0.0025;
+vec3 col = vec3(0);
+
+col+= texscreen(SCREEN_UV+vec2(-radius,-radius));
+col+= texscreen(SCREEN_UV+vec2(0,-radius));
+col+= texscreen(SCREEN_UV+vec2(radius,-radius));
+
+col+= texscreen(SCREEN_UV+vec2(-radius,0));
+col+= texscreen(SCREEN_UV+vec2(0,0));
+col+= texscreen(SCREEN_UV+vec2(radius,0));
+
+
+col+= texscreen(SCREEN_UV+vec2(-radius,radius));
+col+= texscreen(SCREEN_UV+vec2(0,radius));
+col+= texscreen(SCREEN_UV+vec2(radius,radius));
+
+col/=9.0;
+COLOR.rgb=col;
+
+",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+shader/shader = SubResource( 2 )
+shader/shading_mode = 1
 
 [node name="main" type="Node2D"]
 
@@ -178,12 +206,17 @@ sort/enabled = true
 
 [node name="player" parent="entities" instance=ExtResource( 2 )]
 
-editor/display_folded = true
 transform/pos = Vector2( 0, -1 )
 
-[node name="Camera2D" type="Camera2D" parent="entities/player"]
+[node name="g" parent="entities/player"]
 
-transform/pos = Vector2( -180, -142 )
+editor/display_folded = true
+
+[node name="camera" type="Camera2D" parent="entities/player"]
+
+transform/pos = Vector2( -200, -150 )
+z/z = 999
+z/relative = false
 anchor_mode = 0
 rotating = false
 current = true
@@ -201,29 +234,23 @@ drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 
-[node name="clouds" type="TileMap" parent="."]
+[node name="blur" type="TextureFrame" parent="entities/player/camera"]
 
-visibility/visible = false
-transform/pos = Vector2( 64, 0 )
-z/z = 20
-mode = 2
-tile_set = ExtResource( 3 )
-cell/size = Vector2( 20, 22 )
-cell/quadrant_size = 16
-cell/custom_transform = Matrix32( 20, 0, 0, 13, 0, 0 )
-cell/half_offset = 0
-cell/tile_origin = 1
-cell/y_sort = true
-collision/use_kinematic = false
-collision/friction = 1.0
-collision/bounce = 0.0
-collision/layers = 1
-collision/mask = 1
-occluder/light_mask = 1
-tile_data = IntArray( 196621, 0, 196622, 0, 196623, 0, 262157, 0, 262158, 0, 262159, 0, 262160, 0, 393215, 0, 327680, 0, 327681, 0, 327693, 0, 327694, 0, 327695, 0, 327696, 1, 327697, 0, 327698, 0, 458751, 0, 393216, 0, 393217, 0, 393218, 0, 393230, 1, 393231, 1, 393232, 1, 393233, 0, 393234, 0, 393235, 0, 524287, 0, 458752, 0, 458753, 0, 458754, 1, 458759, 0, 458760, 0, 458761, 0, 458769, 0, 458770, 0, 458771, 1, 524288, 1, 524289, 1, 524290, 1, 524295, 0, 524296, 0, 524297, 0, 524298, 0, 524306, 1, 524307, 1, 524311, 0, 524312, 0, 589831, 0, 589832, 0, 589833, 0, 589834, 1, 589846, 0, 589847, 0, 589848, 0, 720894, 0, 720895, 0, 655364, 26, 655368, 1, 655369, 1, 655370, 1, 655383, 0, 655384, 0, 655385, 1, 786429, 0, 786430, 0, 786431, 0, 720899, 7, 720901, 2, 720902, 15, 720908, 0, 720919, 1, 720920, 1, 851966, 0, 851967, 0, 786432, 1, 786437, 7, 786438, 15, 786439, 4, 786444, 0, 786445, 0, 917502, 1, 917503, 1, 851972, 8, 851973, 17, 851974, 4, 851980, 1, 851981, 1, 917521, 0, 917522, 0, 983043, 4, 983044, 10, 983045, 4, 983056, 0, 983057, 0, 983058, 0, 1048580, 4, 1048593, 0, 1048594, 0, 1048595, 1, 1114112, 1, 1114113, 0, 1114114, 0, 1114115, 4, 1114116, 4, 1114129, 1, 1114130, 1, 1179650, 0, 1179651, 1, 1179657, 0, 1179658, 0, 1179659, 0, 1245186, 1, 1245192, 0, 1245193, 0, 1245194, 0, 1245195, 0, 1310729, 1, 1310730, 1, 1310731, 1, 1310732, 1, 1310743, 0, 1310744, 0, 1376278, 0, 1376279, 0, 1376280, 0, 1441815, 0, 1441816, 0, 1441817, 1, 1507351, 1, 1507352, 1, 1638396, 3, 1638398, 5, 1703935, 5 )
-__meta__ = {
-"_edit_lock_": true
-}
+material/material = SubResource( 3 )
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = -336.0
+margin/bottom = -236.0
+texture = ExtResource( 3 )
+modulate = Color( 0, 0, 0, 1 )
+expand = true
+stretch_mode = 0
 
 
 [editable path="entities/player"]

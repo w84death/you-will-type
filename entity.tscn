@@ -33,7 +33,7 @@ length = 1.0
 loop = true
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/path = NodePath("g/Sprite:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -43,7 +43,7 @@ tracks/0/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( 2, -3 ), Vector2( 2, -4 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("shadow:transform/pos")
+tracks/1/path = NodePath("g/shadow:transform/pos")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -53,7 +53,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -4 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath(".:visibility/opacity")
+tracks/2/path = NodePath("g:visibility/opacity")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
@@ -70,7 +70,7 @@ length = 1.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/path = NodePath("g/Sprite:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -80,7 +80,7 @@ tracks/0/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( -12, -8 ), Vector2( -22, -4 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:flip_h")
+tracks/1/path = NodePath("g/Sprite:flip_h")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -90,7 +90,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("shadow:transform/pos")
+tracks/2/path = NodePath("g/shadow:transform/pos")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
@@ -100,7 +100,7 @@ tracks/2/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( -22, -4 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:visibility/opacity")
+tracks/3/path = NodePath("g:visibility/opacity")
 tracks/3/interp = 1
 tracks/3/imported = false
 tracks/3/keys = {
@@ -117,7 +117,7 @@ length = 1.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/path = NodePath("g/Sprite:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -127,7 +127,7 @@ tracks/0/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( 6, -8 ), Vector2( 12, 7 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("shadow:transform/pos")
+tracks/1/path = NodePath("g/shadow:transform/pos")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -137,7 +137,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( 12, 7 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:flip_h")
+tracks/2/path = NodePath("g/Sprite:flip_h")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
@@ -147,7 +147,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:visibility/opacity")
+tracks/3/path = NodePath("g:visibility/opacity")
 tracks/3/interp = 1
 tracks/3/imported = false
 tracks/3/keys = {
@@ -163,7 +163,7 @@ length = 1.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/path = NodePath("g/Sprite:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -173,7 +173,7 @@ tracks/0/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( 12, -8 ), Vector2( 22, -4 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("shadow:transform/pos")
+tracks/1/path = NodePath("g/shadow:transform/pos")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -183,7 +183,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( 22, -4 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:flip_h")
+tracks/2/path = NodePath("g/Sprite:flip_h")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
@@ -193,7 +193,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:visibility/opacity")
+tracks/3/path = NodePath("g:visibility/opacity")
 tracks/3/interp = 1
 tracks/3/imported = false
 tracks/3/keys = {
@@ -210,7 +210,7 @@ length = 1.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/path = NodePath("g/Sprite:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -220,7 +220,7 @@ tracks/0/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( 8, -15 ), Vector2( 12, -15 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("shadow:transform/pos")
+tracks/1/path = NodePath("g/shadow:transform/pos")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -230,7 +230,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( 12, -15 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:flip_h")
+tracks/2/path = NodePath("g/Sprite:flip_h")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
@@ -240,7 +240,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:visibility/opacity")
+tracks/3/path = NodePath("g:visibility/opacity")
 tracks/3/interp = 1
 tracks/3/imported = false
 tracks/3/keys = {
@@ -257,7 +257,7 @@ length = 1.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/path = NodePath("g/Sprite:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -267,7 +267,7 @@ tracks/0/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( -4, -19 ), Vector2( -8, -15 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("shadow:transform/pos")
+tracks/1/path = NodePath("g/shadow:transform/pos")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -277,7 +277,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( -8, -15 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:flip_h")
+tracks/2/path = NodePath("g/Sprite:flip_h")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
@@ -287,7 +287,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:visibility/opacity")
+tracks/3/path = NodePath("g:visibility/opacity")
 tracks/3/interp = 1
 tracks/3/imported = false
 tracks/3/keys = {
@@ -304,7 +304,7 @@ length = 1.5
 loop = false
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:transform/pos")
+tracks/0/path = NodePath("g/Sprite:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
@@ -314,7 +314,7 @@ tracks/0/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( -4, -8 ), Vector2( -8, 7 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("shadow:transform/pos")
+tracks/1/path = NodePath("g/shadow:transform/pos")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
@@ -324,7 +324,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -4 ), Vector2( -8, 7 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:flip_h")
+tracks/2/path = NodePath("g/Sprite:flip_h")
 tracks/2/interp = 1
 tracks/2/imported = false
 tracks/2/keys = {
@@ -334,7 +334,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:visibility/opacity")
+tracks/3/path = NodePath("g:visibility/opacity")
 tracks/3/interp = 1
 tracks/3/imported = false
 tracks/3/keys = {
@@ -350,7 +350,9 @@ script/script = SubResource( 1 )
 x = 0
 y = 0
 
-[node name="shadow" type="Sprite" parent="."]
+[node name="g" type="Node2D" parent="."]
+
+[node name="shadow" type="Sprite" parent="g"]
 
 transform/pos = Vector2( 2, -4 )
 texture = ExtResource( 1 )
@@ -359,7 +361,7 @@ vframes = 4
 hframes = 4
 frame = 4
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="g"]
 
 transform/pos = Vector2( 2, -4 )
 z/z = 10
@@ -367,6 +369,17 @@ texture = ExtResource( 1 )
 centered = false
 vframes = 4
 hframes = 4
+
+[node name="letters" type="Control" parent="g"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
 
 [node name="anim" type="AnimationPlayer" parent="."]
 

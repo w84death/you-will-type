@@ -12,6 +12,7 @@ func _ready():
 	var r = rand_range(0, self.anim.get_current_animation_length())
 	self.anim.seek(r)
 	self.letter_label = self.get_node('sprite/label')
+	write(self.letter)
 	
 func write(letter):
 	self.letter_label.set_text(str(letter))
