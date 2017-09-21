@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://letter.tscn" type="PackedScene" id=1]
+
+[node name="logo" type="Node2D"]
+
+transform/scale = Vector2( 4, 4 )
+
+[node name="letter" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( -64.5, -10.5 )
+letter = "y"
+
+[node name="letter1" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( -54.5, -10.5 )
+letter = "o"
+
+[node name="letter2" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( -44.5, -10.5 )
+letter = "u"
+
+[node name="letter3" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( -24.5, -10.5 )
+letter = "w"
+
+[node name="letter4" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( -14.5, -10.5 )
+letter = "i"
+
+[node name="letter5" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( -4.5, -10.5 )
+letter = "l"
+
+[node name="letter6" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 5.5, -10.5 )
+letter = "l"
+
+[node name="letter7" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 25.5, -10.5 )
+letter = "t"
+
+[node name="letter8" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 35.5, -10.5 )
+letter = "y"
+
+[node name="letter9" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 45.5, -10.5 )
+letter = "p"
+
+[node name="letter10" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 55.5, -10.7256 )
+letter = "e"
+
+
