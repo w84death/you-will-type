@@ -12,6 +12,7 @@ script/source = "extends Node2D
 var player
 var player_bag
 var score = 0
+
 var gui
 var gui_anim
 var gui_score
@@ -19,6 +20,7 @@ var gui_shrooms
 var gui_hi
 var gui_last
 var gui_speed
+
 var terrain
 var entities
 var anim
@@ -32,6 +34,7 @@ const GROUP_SHROOMS = \"shrooms\"
 var letter = preload(\"res://letter.tscn\")
 var snake = preload(\"res://snake.tscn\")
 var shroom = preload(\"res://shroom.tscn\")
+var shroom_red = preload(\"res://shroom_red.tscn\")
 
 const LETTERS = [
 	'a','b','c','d','e','f','g','h','i',
@@ -41,6 +44,13 @@ const LETTERS = [
 const NUMBERS = [
 	'0','1','2','3','4','5','6','7','8','9'
 	]
+
+const MIXED_SAFE = [
+	'a','b','c','d','e','f','g','h',
+	'j','k','l','m','n','p','q','r',
+	's','t','u','w','v','x','y',
+	'3','4','5','6','7','8','9'
+]
 
 const MODE_LETTERS = 0
 const MODE_NUMBERS = 1
@@ -70,7 +80,9 @@ func _ready():
 	spawn_entities(self.snake, self.GROUP_SNAKES, [
 		[1,-1], [-1,-7], [6, -2]])
 	spawn_entities(self.shroom, self.GROUP_SHROOMS, [
-		[2,-3],[-4,0], [-2,-3], [-2,-2]])
+		[2,-3], [-2,-3], [-2,-2], [8,0], [10,1]])
+	spawn_entities(self.shroom_red, self.GROUP_SHROOMS, [
+		[-4,0],[8,-1],[9,-1],[9,1]])
 	register_triggers([
 		[-5,10],[0,-10],[8,1]])
 	check_visibility(self.player)
@@ -120,7 +132,7 @@ func randomize_letters(player):
 	elif self.GAME_MODE == self.MODE_NUMBERS:
 		dictionary = self.NUMBERS
 	elif self.GAME_MODE == self.MODE_HARDCODE:
-		dictionary = self.NUMBERS + self.LETTERS
+		dictionary = self.MIXED_SAFE
 	
 	for node in nodes:
 		dictionary = node.new_letter(dictionary)
@@ -181,7 +193,7 @@ func move_player(x, y, xx, yy):
 func check_shrooms(player):
 	for node in get_tree().get_nodes_in_group(self.GROUP_SHROOMS):
 		if node.check_near_by(player):
-			node.queue_free()
+			node.anim.play(\"die\")
 
 func check_visibility(player):
 	for node in get_tree().get_nodes_in_group(self.GROUP_SNAKES):
@@ -189,6 +201,7 @@ func check_visibility(player):
 	
 func _input(event):
 	var now = self.anim.get_current_animation()
+	var frame = 6
 	if(Input.is_key_pressed(KEY_ESCAPE)):
 		get_tree().quit()
 	if event.type == InputEvent.KEY and event.is_pressed():
@@ -196,6 +209,10 @@ func _input(event):
 		var hit = OS.get_scancode_string(event.unicode)
 		if now == \"idle\" and hit in get_visible_letters():
 			self.audio.play(\"jump\")
+			if get_letter_direction(hit) in ['q','e']: frame = 7
+			elif get_letter_direction(hit) in ['a','d']: frame = 8
+			else: frame = 6
+			self.player_bag.get_node(\"spr\").set_frame(frame)
 			self.anim.play(\"move_\" + get_letter_direction(hit))
 		
 func move_post_anim():
@@ -225,7 +242,7 @@ func save_score(nick, score):
 	file.close()
 
 func game_over():
-	save_score('P1', self.score)
+	save_score('AAA', self.score)
 	get_tree().change_scene(\"res://game_over.tscn\")
 
 func update_gui():
@@ -322,6 +339,7 @@ margin/bottom = -568.0
 
 [node name="bottom" type="CenterContainer" parent="entities/player/camera"]
 
+editor/display_folded = true
 rect/scale = Vector2( 2, 2 )
 focus/ignore_mouse = false
 focus/stop_mouse = true

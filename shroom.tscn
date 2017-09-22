@@ -4,8 +4,8 @@
 
 [node name="shroom" instance=ExtResource( 1 )]
 
-[node name="Sprite" parent="g"]
+[node name="spr" parent="g"]
 
-frame = 3
+frame = 1
 
 
