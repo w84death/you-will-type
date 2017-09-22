@@ -27,3 +27,7 @@ Each turn you move one tile. You select a tile typing exact letter. You will be 
 - Linux 32/64
 - Windows 10
 - macOS
+
+# Download
+
+[https://w84death.itch.io/you-will-type](https://w84death.itch.io/you-will-type)
