@@ -6,6 +6,6 @@
 
 [node name="Sprite" parent="g"]
 
-frame = 6
+frame = 3
 
 
