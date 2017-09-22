@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://gui_theme-green.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=2]
-[ext_resource path="res://gui_theme-blue.tres" type="Theme" id=3]
-[ext_resource path="res://gui_theme.tres" type="Theme" id=4]
+[ext_resource path="res://shroom.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gui_theme-blue.tres" type="Theme" id=4]
+[ext_resource path="res://gui_theme.tres" type="Theme" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -59,10 +60,20 @@ tracks/3/keys = {
 "values": [ Vector2( -111, -17 ), Vector2( -115, -17 ), Vector2( -111, -17 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("shrooms:rect/pos")
+tracks/4/path = NodePath("fails:rect/pos")
 tracks/4/interp = 1
 tracks/4/imported = false
 tracks/4/keys = {
+"times": FloatArray( 0, 0.6, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 32, -17 ), Vector2( 36, -17 ), Vector2( 32, -17 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("shrooms:rect/pos")
+tracks/5/interp = 1
+tracks/5/imported = false
+tracks/5/keys = {
 "times": FloatArray( 0, 0.6, 1 ),
 "transitions": FloatArray( 1, 1, 1 ),
 "update": 0,
@@ -132,7 +143,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="shrooms" type="Panel" parent="."]
+[node name="fails" type="Panel" parent="."]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -144,7 +155,7 @@ margin/top = -17.0
 margin/right = 112.0
 margin/bottom = 15.0
 
-[node name="_shrooms" type="Label" parent="shrooms"]
+[node name="_fails" type="Label" parent="fails"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -157,14 +168,14 @@ margin/top = 0.0
 margin/right = 8.0
 margin/bottom = 16.0
 custom_colors/font_color = Color( 0.6, 0.898039, 0.313726, 1 )
-text = "shrooms"
+text = "fails"
 align = 2
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="val" type="Label" parent="shrooms"]
+[node name="val" type="Label" parent="fails"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -185,13 +196,49 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="shrooms" type="Control" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+theme/theme = ExtResource( 1 )
+margin/left = 32.0
+margin/top = -17.0
+margin/right = 112.0
+margin/bottom = 15.0
+
+[node name="val" type="Label" parent="shrooms"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 35.0
+margin/top = 0.0
+margin/right = 3.0
+margin/bottom = 8.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "3"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="shroom" parent="shrooms" instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 17, 4.5 )
+
 [node name="last" type="Panel" parent="."]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 3 )
+theme/theme = ExtResource( 4 )
 margin/left = -51.0
 margin/top = -13.0
 margin/right = -3.0
@@ -241,7 +288,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 3 )
+theme/theme = ExtResource( 4 )
 margin/left = 4.0
 margin/top = -13.0
 margin/right = 52.0
@@ -293,7 +340,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 4 )
+theme/theme = ExtResource( 5 )
 margin/left = -25.0
 margin/top = -26.0
 margin/right = 23.0

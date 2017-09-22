@@ -22,6 +22,8 @@ var gui_shrooms
 var gui_hi
 var gui_last
 var gui_speed
+var gui_fails
+
 var dirty = false
 var terrain
 var entities
@@ -55,7 +57,7 @@ var shroom_red = preload(\"res://shroom_red.tscn\")
 
 const LETTERS = [
 	'a','b','c','d','e','f','g','h','i',
-	'j','k','l','m','n','o','p','q','r',
+	'j','k','l','m','n','o','p','r',
 	's','t','u','w','v','x','y','z']
 
 const NUMBERS = [
@@ -64,7 +66,7 @@ const NUMBERS = [
 
 const MIXED_SAFE = [
 	'a','b','c','d','e','f','g','h',
-	'j','k','l','m','n','p','q','r',
+	'j','k','l','m','n','p','r',
 	's','t','u','w','v','x','y',
 	'3','4','5','6','7','8','9'
 ]
@@ -95,6 +97,7 @@ func _ready():
 	self.gui_hi = self.gui.get_node(\"hi/val\")
 	self.gui_last = self.gui.get_node(\"last/val\")
 	self.gui_speed = self.gui.get_node(\"speed/val\")
+	self.gui_fails = self.gui.get_node(\"fails/val\")
 	self.timer = reset_timer()
 	self.anim = self.player.get_node(\"anim\")
 	self.anim.connect(\"finished\", self, \"move_post_anim\")
@@ -209,7 +212,6 @@ func move_player(x, y, xx, yy):
 	self.player.y += y
 	self.player.set_position()
 	if check_trigger(self.player.x, self.player.y):
-		print(self.GAME_MODE)
 		if self.GAME_MODE == self.GAME_MODE_WIN:
 			game_over(true)
 			return false
@@ -276,8 +278,7 @@ func move_post_anim():
 		move_player(0, 1, SHIFT_X, SHIFT_Y)
 	self.anim.play(\"idle\")
 
-
-func game_over(win = false):
+func calculate_score():
 	var hi = self.time_hi
 	var score_hi = 0
 	var score_fail = 0
@@ -289,13 +290,11 @@ func game_over(win = false):
 		score_shrooms = self.shrooms * self.POINTS_SHROOM * self.POINTS_NO_FAIL
 	else:
 		score_shrooms = self.shrooms * self.POINTS_SHROOM
+		
+	return score_hi + score_fail + score_shrooms
 	
-	print('HI: ', score_hi)
-	print('FAIL: ', score_fail)
-	print('SHROOMS: ', score_shrooms)
-	
-	self.score = score_hi + score_fail + score_shrooms
-	
+func game_over(win = false):
+	self.score = calculate_score()
 	Globals.set('last_score', self.score)
 	Globals.set('speed', calculate_average())
 	Globals.set('shrooms', self.shrooms)
@@ -314,11 +313,12 @@ func register_time():
 	self.timers.append(t)
 	
 func update_gui():
-	self.gui_score.set_text(str(self.score))
+	self.gui_score.set_text(str(calculate_score()))
 	self.gui_shrooms.set_text(str(self.shrooms))
 	self.gui_speed.set_text(str(calculate_average()) + \" ms\")
 	self.gui_last.set_text(str(self.time_last) + \" ms\")
 	self.gui_hi.set_text(str(self.time_hi) + \" ms\")
+	self.gui_fails.set_text(str(self.fails))
 	
 func calculate_average():
 	var count = 0
