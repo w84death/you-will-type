@@ -44,6 +44,7 @@ const GROUP_SHROOMS = \"shrooms\"
 
 const POINTS_BETTER_SCORE = 1000
 const POINTS_PERFECT = 100
+const POINTS_DIRTY = 10
 const POINTS_ROAD = 100
 const POINTS_SHROOM = 1000
 const POINTS_FAIL = -250
@@ -250,6 +251,7 @@ func _input(event):
 					self.score += POINTS_PERFECT
 				else:
 					self.dirty = false
+					self.score += POINTS_DIRTY
 				self.audio.play(\"jump\")
 				if get_letter_direction(hit) in ['q','e']: frame = 7
 				elif get_letter_direction(hit) in ['a','d']: frame = 8
@@ -291,7 +293,7 @@ func calculate_score():
 	else:
 		score_shrooms = self.shrooms * self.POINTS_SHROOM
 		
-	return score_hi + score_fail + score_shrooms
+	return self.score + score_hi + score_fail + score_shrooms
 	
 func game_over(win = false):
 	self.score = calculate_score()
