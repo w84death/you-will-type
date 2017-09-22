@@ -46,16 +46,18 @@ func check_near_by(p):
 	if self.x == p.x and self.y - 1 == p.y: return true
 	if self.x == p.x and self.y + 1 == p.y: return true
 	if self.y % 2 == 0:
-		
 		if self.x -1  == p.x and self.y - 1 == p.y: return true
 		if self.x -1 == p.x and self.y + 1 == p.y: return true
 	else:
-		
 		if self.x +1  == p.x and self.y - 1 == p.y: return true
 		if self.x +1 == p.x and self.y + 1 == p.y: return true
 	return false
 	
-	
+func make_move(dir, x, y):
+	print(\"move snake\", x, y)
+	#self.anim.play(\"move_\" + dir)
+	self.set_position(x, y)
+
 func move_post_anim():
 	var a = self.anim.get_current_animation()
 	if a == \"die\":
@@ -65,7 +67,7 @@ func die():
 	queue_free()
 	"
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 
 resource/name = "die"
 length = 1.0
@@ -92,9 +94,8 @@ tracks/1/keys = {
 "values": [ 1.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=13]
 
-resource/name = "hide"
 length = 1.0
 loop = false
 step = 0.1
@@ -109,7 +110,7 @@ tracks/0/keys = {
 "values": [ 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=14]
 
 length = 1.0
 loop = true
@@ -145,7 +146,7 @@ tracks/2/keys = {
 "values": [ 1.0 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=15]
 
 length = 1.5
 loop = false
@@ -191,7 +192,7 @@ tracks/3/keys = {
 "values": [ 1.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=16]
 
 length = 1.5
 loop = false
@@ -237,7 +238,7 @@ tracks/3/keys = {
 "values": [ 1.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=17]
 
 length = 1.5
 loop = false
@@ -283,7 +284,7 @@ tracks/3/keys = {
 "values": [ 1.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=18]
 
 length = 1.5
 loop = false
@@ -329,7 +330,7 @@ tracks/3/keys = {
 "values": [ 1.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=19]
 
 length = 1.5
 loop = false
@@ -375,7 +376,7 @@ tracks/3/keys = {
 "values": [ 1.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=20]
 
 length = 1.5
 loop = false
@@ -421,9 +422,8 @@ tracks/3/keys = {
 "values": [ 1.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 
-resource/name = "show"
 length = 1.0
 loop = false
 step = 0.1
@@ -491,16 +491,16 @@ margin/bottom = 0.0
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/die = SubResource( 11 )
-anims/hide = SubResource( 2 )
-anims/idle = SubResource( 3 )
-anims/move_a = SubResource( 4 )
-anims/move_c = SubResource( 5 )
-anims/move_d = SubResource( 6 )
-anims/move_e = SubResource( 7 )
-anims/move_q = SubResource( 8 )
-anims/move_z = SubResource( 9 )
-anims/show = SubResource( 10 )
+anims/die = SubResource( 12 )
+anims/hide = SubResource( 13 )
+anims/idle = SubResource( 14 )
+anims/move_a = SubResource( 15 )
+anims/move_c = SubResource( 16 )
+anims/move_d = SubResource( 17 )
+anims/move_e = SubResource( 18 )
+anims/move_q = SubResource( 19 )
+anims/move_z = SubResource( 20 )
+anims/show = SubResource( 11 )
 playback/active = true
 playback/speed = 4.0
 blend_times = [  ]

@@ -178,7 +178,7 @@ margin/right = 6.0
 margin/bottom = 0.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "00013"
+text = "3"
 align = 2
 valign = 1
 percent_visible = 1.0
@@ -247,7 +247,7 @@ margin/top = -13.0
 margin/right = 52.0
 margin/bottom = 11.0
 
-[node name="bal" type="Label" parent="hi"]
+[node name="val" type="Label" parent="hi"]
 
 anchor/right = 1
 anchor/bottom = 1

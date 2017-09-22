@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=19 format=1]
 
 [ext_resource path="res://terrain-tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://blur.tscn" type="PackedScene" id=2]
@@ -6,11 +6,28 @@
 [ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=4]
 [ext_resource path="res://snake.tscn" type="PackedScene" id=5]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends CenterContainer
 
+var score
+var shrooms
+var speed
+
+var win
+var lose
+
 func _ready():
+	self.win = self.get_node(\"point/labels/win\")
+	self.lose = self.get_node(\"point/labels/lose\")
+	self.shrooms = self.get_node(\"point/labels/win/shrooms\")
+	self.speed = self.get_node(\"point/labels/win/speed\")
+	self.score = self.get_node(\"point/labels/win/score\")
+	update_score(
+		Globals.get('last_score'),
+		Globals.get('shrooms'),
+		Globals.get('speed'),
+		Globals.get('win'))
 	set_process_input(true)
 	
 func _input(event):
@@ -18,11 +35,29 @@ func _input(event):
 		get_tree().quit()
 	if event.type == InputEvent.KEY and event.is_pressed():
 		start_game()
-	
-func start_game():
-	get_tree().change_scene(\"res://game.tscn\")"
 
-[sub_resource type="CanvasItemShader" id=1]
+func save_score(nick, score):
+	var file = File.new()
+	file.open(\"user://high_scores.p1x\", File.READ_WRITE)
+	var data = file.get_var()
+	data.append([nick, score])
+	file.seek(0)
+	file.store_var(data)
+	file.close()
+	
+func update_score(last_score, shrooms, speed, win):
+	if win:
+		save_score('AAA', last_score)
+		self.win.show()
+		self.score.set_text(str(last_score))
+		self.shrooms.set_text(str(shrooms))
+		self.speed.set_text(str(speed) + \" ms\")
+	else: self.lose.show()
+
+func start_game():
+	get_tree().change_scene(\"res://menu.tscn\")"
+
+[sub_resource type="CanvasItemShader" id=2]
 
 _code = {
 "fragment": "uniform texture vignette;
@@ -53,17 +88,372 @@ COLOR.rgb=col;
 "vertex_ofs": 0
 }
 
-[sub_resource type="CanvasItemMaterial" id=2]
+[sub_resource type="CanvasItemMaterial" id=3]
 
-shader/shader = SubResource( 1 )
+shader/shader = SubResource( 2 )
 shader/shading_mode = 1
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 
 font/size = 8
 font/use_mipmaps = true
 font/use_filter = false
 font/font = ExtResource( 4 )
+
+[sub_resource type="Animation" id=5]
+
+resource/name = "die"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("g/spr:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( 2, -12 ), Vector2( 2, -24 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("g/spr:visibility/opacity")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 0.5, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("g:visibility/opacity")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("g/spr:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.2, 0.4 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 2, -4 ), Vector2( 2, -3 ), Vector2( 2, -4 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("g/shadow:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("g:visibility/opacity")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+
+length = 1.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("g/spr:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( -12, -8 ), Vector2( -22, -4 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("g/spr:flip_h")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("g/shadow:transform/pos")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( -22, -4 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("g:visibility/opacity")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 1, 1.5 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=9]
+
+length = 1.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("g/spr:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( 6, -8 ), Vector2( 12, 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("g/shadow:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( 12, 7 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("g/spr:flip_h")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("g:visibility/opacity")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 1, 1.5 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=10]
+
+length = 1.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("g/spr:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( 12, -8 ), Vector2( 22, -4 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("g/shadow:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( 22, -4 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("g/spr:flip_h")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("g:visibility/opacity")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 1, 1.5 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=11]
+
+length = 1.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("g/spr:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( 8, -15 ), Vector2( 12, -15 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("g/shadow:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( 12, -15 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("g/spr:flip_h")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("g:visibility/opacity")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 1, 1.5 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=12]
+
+length = 1.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("g/spr:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( -4, -19 ), Vector2( -8, -15 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("g/shadow:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( -8, -15 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("g/spr:flip_h")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("g:visibility/opacity")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 1, 1.5 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=13]
+
+length = 1.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("g/spr:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5, 1 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( -4, -8 ), Vector2( -8, 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("g/shadow:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, -4 ), Vector2( -8, 7 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("g/spr:flip_h")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("g:visibility/opacity")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 1, 1.5 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.0 ]
+}
 
 [node name="game over" type="CenterContainer"]
 
@@ -78,7 +468,7 @@ margin/top = 0.0
 margin/right = 0.0
 margin/bottom = 0.0
 use_top_left = false
-script/script = SubResource( 4 )
+script/script = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -119,7 +509,7 @@ __meta__ = {
 
 [node name="blur" parent="point" instance=ExtResource( 2 )]
 
-material/material = SubResource( 2 )
+material/material = SubResource( 3 )
 margin/left = -400.0
 margin/top = -300.0
 margin/right = -400.0
@@ -143,7 +533,7 @@ margin/left = -53.0
 margin/top = -22.0
 margin/right = 77.0
 margin/bottom = -13.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "GAME OVER!"
 align = 1
@@ -152,17 +542,30 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="_score" type="Label" parent="point/labels"]
+[node name="win" type="Control" parent="point/labels"]
+
+editor/display_folded = true
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 40.0
+margin/bottom = 40.0
+
+[node name="_score" type="Label" parent="point/labels/win"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = -55.0
-margin/top = 4.0
+margin/top = 20.0
 margin/right = 75.0
-margin/bottom = 13.0
-custom_fonts/font = SubResource( 3 )
+margin/bottom = 30.0
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
 text = "SCORE"
 align = 1
@@ -171,17 +574,17 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="score" type="Label" parent="point/labels"]
+[node name="score" type="Label" parent="point/labels/win"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = -55.0
-margin/top = 12.0
+margin/top = 28.0
 margin/right = 75.0
-margin/bottom = 21.0
-custom_fonts/font = SubResource( 3 )
+margin/bottom = 37.0
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "000000"
 align = 1
@@ -190,38 +593,127 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="_time" type="Label" parent="point/labels"]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = -56.0
-margin/top = 31.0
-margin/right = 74.0
-margin/bottom = 40.0
-custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
-text = "TIME"
-align = 1
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="time" type="Label" parent="point/labels"]
+[node name="_shrooms" type="Label" parent="point/labels/win"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = -55.0
-margin/top = 40.0
+margin/top = 1.0
 margin/right = 75.0
-margin/bottom = 49.0
-custom_fonts/font = SubResource( 3 )
+margin/bottom = 11.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
+text = "SHROOMS"
+align = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="shrooms" type="Label" parent="point/labels/win"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -55.0
+margin/top = 8.0
+margin/right = 75.0
+margin/bottom = 17.0
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "00:00"
+text = "000000"
+align = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="_speed" type="Label" parent="point/labels/win"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -56.0
+margin/top = 40.0
+margin/right = 74.0
+margin/bottom = 49.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
+text = "SPEED"
+align = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="speed" type="Label" parent="point/labels/win"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -55.0
+margin/top = 47.0
+margin/right = 75.0
+margin/bottom = 56.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "000 ms"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="lose" type="Control" parent="point/labels"]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 40.0
+margin/bottom = 40.0
+
+[node name="_lamer" type="Label" parent="point/labels/lose"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -55.0
+margin/top = 4.0
+margin/right = 75.0
+margin/bottom = 34.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
+text = "SNAKE
+GETS
+YOU"
+align = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="_again" type="Label" parent="point/labels/lose"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -55.0
+margin/top = 37.0
+margin/right = 75.0
+margin/bottom = 46.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "TRY AGAIN"
 align = 1
 uppercase = true
 percent_visible = 1.0
@@ -230,12 +722,25 @@ max_lines_visible = -1
 
 [node name="snake" parent="point" instance=ExtResource( 5 )]
 
-transform/pos = Vector2( -130, -140 )
+editor/display_folded = true
+transform/pos = Vector2( -132, -140 )
 transform/scale = Vector2( 4, 4 )
 
 [node name="shadow" parent="point/snake/g"]
 
 visibility/visible = false
+
+[node name="anim" parent="point/snake"]
+
+anims/die = SubResource( 5 )
+anims/hide = SubResource( 6 )
+anims/idle = SubResource( 7 )
+anims/move_a = SubResource( 8 )
+anims/move_c = SubResource( 9 )
+anims/move_d = SubResource( 10 )
+anims/move_e = SubResource( 11 )
+anims/move_q = SubResource( 12 )
+anims/move_z = SubResource( 13 )
 
 
 [editable path="point/snake"]

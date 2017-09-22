@@ -17,6 +17,20 @@ texture = ExtResource( 1 )
 region = true
 region_rect = Rect2( 0, 22, 20, 22 )
 
+[node name="shroom" type="Sprite" parent="."]
+
+transform/pos = Vector2( 0, 90 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 0, 88, 20, 22 )
+
+[node name="snake" type="Sprite" parent="."]
+
+transform/pos = Vector2( 30, 90 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 20, 88, 20, 22 )
+
 [node name="mountains" type="Sprite" parent="."]
 
 transform/pos = Vector2( 30, 0 )
