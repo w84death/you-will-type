@@ -8,7 +8,9 @@ Each turn you move one tile. You select a tile typing exact letter. You will be 
 
 ![img](https://i.imgur.com/384pIh6.png)
 ![img](https://i.imgur.com/CzC3uY8.png)
+
 ![img](https://i.imgur.com/a2pM1pl.gif)
+
 ![img](https://i.imgur.com/JADRybI.gif)
 
 ## Technical
