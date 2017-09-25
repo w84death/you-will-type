@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=1]
+[gd_scene load_steps=21 format=1]
 
 [ext_resource path="res://terrain-tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://blur.tscn" type="PackedScene" id=2]
@@ -455,8 +455,43 @@ tracks/3/keys = {
 "values": [ 1.0, 1.0, 0.0 ]
 }
 
+[sub_resource type="Animation" id=14]
+
+resource/name = "fade-in"
+length = 2.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visibility/opacity")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=15]
+
+resource/name = "fade-out"
+length = 1.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visibility/opacity")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+
 [node name="game over" type="CenterContainer"]
 
+visibility/opacity = 0.0
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -741,6 +776,18 @@ anims/move_d = SubResource( 10 )
 anims/move_e = SubResource( 11 )
 anims/move_q = SubResource( 12 )
 anims/move_z = SubResource( 13 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/fade-in = SubResource( 14 )
+anims/fade-out = SubResource( 15 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "fade-in"
 
 
 [editable path="point/snake"]

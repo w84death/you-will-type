@@ -800,6 +800,7 @@ margin/right = 129.0
 margin/bottom = 15.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "press spacebar to start"
 align = 1
 uppercase = true
@@ -909,6 +910,7 @@ margin/right = 158.0
 margin/bottom = 52.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "1. go to the other city tile
 2. react as fast as you can
 3. don't pause
@@ -958,6 +960,7 @@ margin/right = 158.0
 margin/bottom = 51.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "this is alpha release
 - snakes do nothing
 - game is not balanced
@@ -984,6 +987,7 @@ margin/right = -47.0
 margin/bottom = -104.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "p1x presents"
 align = 1
 uppercase = true
@@ -1003,6 +1007,7 @@ margin/right = 155.0
 margin/bottom = -63.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "VERSION ALPHA 7"
 align = 1
 uppercase = true
@@ -1022,6 +1027,7 @@ margin/right = 32.0
 margin/bottom = -22.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "HIGH SCORES"
 uppercase = true
 percent_visible = 1.0
@@ -1040,6 +1046,7 @@ margin/right = -22.0
 margin/bottom = 81.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "1.
 2.
 3.
@@ -1066,6 +1073,7 @@ margin/right = 35.0
 margin/bottom = 82.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "9999
 8888
 7777
