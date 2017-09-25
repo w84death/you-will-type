@@ -36,7 +36,7 @@ region_rect = Rect2( 20, 88, 20, 22 )
 transform/pos = Vector2( 30, 0 )
 texture = ExtResource( 1 )
 region = true
-region_rect = Rect2( 20, 0, 20, 22 )
+region_rect = Rect2( 0, 44, 20, 22 )
 
 [node name="ground" type="Sprite" parent="."]
 
@@ -57,14 +57,14 @@ region_rect = Rect2( 20, 44, 20, 22 )
 transform/pos = Vector2( 60, 0 )
 texture = ExtResource( 1 )
 region = true
-region_rect = Rect2( 40, 0, 20, 22 )
+region_rect = Rect2( 40, 66, 20, 22 )
 
 [node name="forest" type="Sprite" parent="."]
 
 transform/pos = Vector2( 60, 30 )
 texture = ExtResource( 1 )
 region = true
-region_rect = Rect2( 40, 22, 20, 22 )
+region_rect = Rect2( 0, 66, 20, 22 )
 
 [node name="forest2" type="Sprite" parent="."]
 
@@ -72,6 +72,20 @@ transform/pos = Vector2( 60, 60 )
 texture = ExtResource( 1 )
 region = true
 region_rect = Rect2( 40, 44, 20, 22 )
+
+[node name="forest3" type="Sprite" parent="."]
+
+transform/pos = Vector2( 60, 90 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 40, 88, 20, 22 )
+
+[node name="forest4" type="Sprite" parent="."]
+
+transform/pos = Vector2( 60, 120 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 20, 66, 20, 22 )
 
 [node name="road" type="Sprite" parent="."]
 

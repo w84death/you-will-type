@@ -30,7 +30,7 @@
 2/texture = ExtResource( 1 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
-2/region = Rect2( 20, 0, 20, 22 )
+2/region = Rect2( 0, 44, 20, 22 )
 2/occluder_offset = Vector2( 10, 11 )
 2/navigation_offset = Vector2( 10, 11 )
 2/shape_offset = Vector2( 0, 0 )
@@ -63,7 +63,7 @@
 5/texture = ExtResource( 1 )
 5/tex_offset = Vector2( 0, 0 )
 5/modulate = Color( 1, 1, 1, 1 )
-5/region = Rect2( 40, 0, 20, 22 )
+5/region = Rect2( 40, 66, 20, 22 )
 5/occluder_offset = Vector2( 10, 11 )
 5/navigation_offset = Vector2( 10, 11 )
 5/shape_offset = Vector2( 0, 0 )
@@ -74,7 +74,7 @@
 6/texture = ExtResource( 1 )
 6/tex_offset = Vector2( 0, 0 )
 6/modulate = Color( 1, 1, 1, 1 )
-6/region = Rect2( 40, 22, 20, 22 )
+6/region = Rect2( 0, 66, 20, 22 )
 6/occluder_offset = Vector2( 10, 11 )
 6/navigation_offset = Vector2( 10, 11 )
 6/shape_offset = Vector2( 0, 0 )
@@ -334,4 +334,26 @@
 29/shapes = [  ]
 29/one_way_collision_direction = Vector2( 0, 0 )
 29/one_way_collision_max_depth = 0.0
+30/name = "forest3"
+30/texture = ExtResource( 1 )
+30/tex_offset = Vector2( 0, 0 )
+30/modulate = Color( 1, 1, 1, 1 )
+30/region = Rect2( 40, 88, 20, 22 )
+30/occluder_offset = Vector2( 10, 11 )
+30/navigation_offset = Vector2( 10, 11 )
+30/shape_offset = Vector2( 0, 0 )
+30/shapes = [  ]
+30/one_way_collision_direction = Vector2( 0, 0 )
+30/one_way_collision_max_depth = 0.0
+31/name = "forest4"
+31/texture = ExtResource( 1 )
+31/tex_offset = Vector2( 0, 0 )
+31/modulate = Color( 1, 1, 1, 1 )
+31/region = Rect2( 20, 66, 20, 22 )
+31/occluder_offset = Vector2( 10, 11 )
+31/navigation_offset = Vector2( 10, 11 )
+31/shape_offset = Vector2( 0, 0 )
+31/shapes = [  ]
+31/one_way_collision_direction = Vector2( 0, 0 )
+31/one_way_collision_max_depth = 0.0
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://levels/level1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entity.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends Node2D
+
+var game_is_running = false
 var player
 var player_bag
 var score = 0
@@ -28,6 +30,7 @@ var dirty = false
 var terrain
 var entities
 var anim
+var game_anim
 var triggers = []
 var audio
 
@@ -84,7 +87,7 @@ const TILE_GRASS = 5
 const TILE_TRIGGER = [21,22,23]
 const TILE_TRIGGER_EMPTY = 20
 
-const CANT_MOVE = [-1,0,1,2]
+const CANT_MOVE = [-1,0,1,2, 6, 7]
 
 func _ready():
 	self.terrain = get_node(\"terrain\")
@@ -101,7 +104,9 @@ func _ready():
 	self.gui_fails = self.gui.get_node(\"fails/val\")
 	self.timer = reset_timer()
 	self.anim = self.player.get_node(\"anim\")
+	self.game_anim = self.get_node(\"anim\")
 	self.anim.connect(\"finished\", self, \"move_post_anim\")
+	self.game_anim.connect(\"finished\", self, \"start_game\")
 	self.audio = self.get_node(\"audio\")
 	spawn_letters(self.player_bag)
 	auto_spawn_entities(self.terrain)
@@ -109,6 +114,13 @@ func _ready():
 	self.player.raise()
 	set_fixed_process(true)
 	set_process_input(true)
+	
+func start_game():
+	var a = self.game_anim.get_current_animation()
+	if a == \"fade-in\":
+		self.game_anim.play(\"show_gui\")
+		self.game_is_running = true
+	
 	
 func reset_timer():
 	return OS.get_ticks_msec()
@@ -241,6 +253,8 @@ func _input(event):
 	var frame = 6
 	if(Input.is_key_pressed(KEY_ESCAPE)):
 		get_tree().quit()
+	if not self.game_is_running: return false
+	
 	if event.type == InputEvent.KEY and event.is_pressed():
 		self.gui_anim.play(\"press\")
 		var hit = OS.get_scancode_string(event.unicode)
@@ -281,6 +295,7 @@ func move_post_anim():
 	self.anim.play(\"idle\")
 
 func calculate_score():
+	if not self.game_is_running: return \"-\"
 	var hi = self.time_hi
 	var score_hi = 0
 	var score_fail = 0
@@ -315,9 +330,10 @@ func register_time():
 	self.timers.append(t)
 	
 func update_gui():
+	if not self.game_is_running: return
 	self.gui_score.set_text(str(calculate_score()))
 	self.gui_shrooms.set_text(str(self.shrooms))
-	self.gui_speed.set_text(str(calculate_average()) + \" ms\")
+	self.gui_speed.set_text(str(get_time(self.timer)) + \" ms\")
 	self.gui_last.set_text(str(self.time_last) + \" ms\")
 	self.gui_hi.set_text(str(self.time_hi) + \" ms\")
 	self.gui_fails.set_text(str(self.fails))
@@ -346,8 +362,53 @@ samples/jump = {
 "sample": ExtResource( 5 )
 }
 
+[sub_resource type="Animation" id=3]
+
+resource/name = "fade-in"
+length = 2.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visibility/opacity")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("entities/player/camera/bottom:visibility/opacity")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+
+resource/name = "show_gui"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("entities/player/camera/bottom:visibility/opacity")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
 [node name="main" type="Node2D"]
 
+visibility/opacity = 0.0
 script/script = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -371,14 +432,15 @@ editor/display_folded = true
 
 [node name="camera" type="Camera2D" parent="entities/player"]
 
-transform/pos = Vector2( -200, -150 )
+transform/pos = Vector2( 10, 4 )
 transform/scale = Vector2( 0.5, 0.5 )
 z/z = 999
 z/relative = false
+offset = Vector2( -192, -90 )
 anchor_mode = 0
 rotating = false
 current = true
-zoom = Vector2( 0.5, 0.5 )
+zoom = Vector2( 0.25, 0.25 )
 limit/left = -10000000
 limit/top = -10000000
 limit/right = 10000000
@@ -387,10 +449,10 @@ drag_margin/h_enabled = true
 drag_margin/v_enabled = true
 smoothing/enable = true
 smoothing/speed = 4.0
-drag_margin/left = 0.2
-drag_margin/top = 0.2
-drag_margin/right = 0.2
-drag_margin/bottom = 0.2
+drag_margin/left = 0.05
+drag_margin/top = 0.05
+drag_margin/right = 0.05
+drag_margin/bottom = 0.05
 
 [node name="blur" parent="entities/player/camera" instance=ExtResource( 3 )]
 
@@ -398,30 +460,32 @@ anchor/left = 3
 anchor/top = 3
 anchor/right = 3
 anchor/bottom = 3
-margin/left = 32.0
-margin/top = 32.0
-margin/right = -768.0
-margin/bottom = -568.0
+rect/min_size = Vector2( 800, 500 )
+margin/left = 446.0
+margin/top = 298.0
+margin/right = -354.0
+margin/bottom = -202.0
 
 [node name="bottom" type="CenterContainer" parent="entities/player/camera"]
 
+visibility/opacity = 0.0
+anchor/right = 1
+anchor/bottom = 1
 rect/scale = Vector2( 2, 2 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 0.0
-margin/top = 520.0
-margin/right = 400.0
-margin/bottom = 520.0
+margin/left = -20.0
+margin/top = 144.0
+margin/right = 84.0
+margin/bottom = -80.0
 use_top_left = false
 
 [node name="gui" parent="entities/player/camera/bottom" instance=ExtResource( 4 )]
 
 editor/display_folded = true
 rect/scale = Vector2( 1, 1 )
-margin/left = 200.0
-margin/right = 200.0
 
 [node name="audio" type="SamplePlayer2D" parent="."]
 
@@ -433,6 +497,18 @@ params/attenuation/distance_exp = 1.0
 config/polyphony = 1
 config/samples = SubResource( 2 )
 config/pitch_random = 0.0
+
+[node name="anim" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/fade-in = SubResource( 3 )
+anims/show_gui = SubResource( 4 )
+playback/active = true
+playback/speed = 2.0
+blend_times = [  ]
+autoplay = "fade-in"
 
 
 [editable path="entities/player"]

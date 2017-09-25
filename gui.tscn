@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=1]
 
-[ext_resource path="res://gui_theme-green.tres" type="Theme" id=1]
+[ext_resource path="res://gui_theme-button.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=2]
 [ext_resource path="res://shroom.tscn" type="PackedScene" id=3]
 [ext_resource path="res://gui_theme-blue.tres" type="Theme" id=4]
