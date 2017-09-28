@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=7 format=1]
 
-[ext_resource path="res://gui_theme-button.tres" type="Theme" id=1]
+[ext_resource path="res://gui_theme-blue.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=2]
 [ext_resource path="res://shroom.tscn" type="PackedScene" id=3]
-[ext_resource path="res://gui_theme-blue.tres" type="Theme" id=4]
-[ext_resource path="res://gui_theme.tres" type="Theme" id=5]
+[ext_resource path="res://gui_theme.tres" type="Theme" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -238,7 +237,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 4 )
+theme/theme = ExtResource( 1 )
 margin/left = -51.0
 margin/top = -13.0
 margin/right = -3.0
@@ -288,7 +287,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 4 )
+theme/theme = ExtResource( 1 )
 margin/left = 4.0
 margin/top = -13.0
 margin/right = 52.0
@@ -340,7 +339,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 5 )
+theme/theme = ExtResource( 4 )
 margin/left = -25.0
 margin/top = -26.0
 margin/right = 23.0

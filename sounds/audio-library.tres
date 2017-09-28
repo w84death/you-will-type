@@ -1,0 +1,55 @@
+[gd_resource type="SampleLibrary" load_steps=8 format=1]
+
+[ext_resource path="res://sounds/enter.wav" type="Sample" id=1]
+[ext_resource path="res://sounds/fail.wav" type="Sample" id=2]
+[ext_resource path="res://sounds/intro.wav" type="Sample" id=3]
+[ext_resource path="res://sounds/jump.wav" type="Sample" id=4]
+[ext_resource path="res://sounds/shroom.wav" type="Sample" id=5]
+[ext_resource path="res://sounds/snake.wav" type="Sample" id=6]
+[ext_resource path="res://sounds/win.wav" type="Sample" id=7]
+
+[resource]
+
+samples/enter = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 1 )
+}
+samples/fail = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 2 )
+}
+samples/intro = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 3 )
+}
+samples/jump = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 4 )
+}
+samples/shroom = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 5 )
+}
+samples/snake = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 6 )
+}
+samples/win = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 7 )
+}
+

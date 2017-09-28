@@ -4,7 +4,8 @@
 [ext_resource path="res://entity.tscn" type="PackedScene" id=2]
 [ext_resource path="res://blur.tscn" type="PackedScene" id=3]
 [ext_resource path="res://gui.tscn" type="PackedScene" id=4]
-[ext_resource path="res://sounds/jump.wav" type="Sample" id=5]
+[ext_resource path="res://war_room.tscn" type="PackedScene" id=5]
+[ext_resource path="res://sounds/audio-library.tres" type="SampleLibrary" id=6]
 
 [sub_resource type="GDScript" id=1]
 
@@ -93,7 +94,7 @@ func _ready():
 	self.entities = get_node(\"entities\")
 	self.player = self.entities.get_node(\"player\")
 	self.player_bag = self.player.get_node(\"g\")
-	self.gui = self.player.get_node(\"camera/bottom/gui\")
+	self.gui = self.player.get_node(\"camera/bottom/anchor/gui\")
 	self.gui_anim = self.gui.get_node(\"anim\")
 	self.gui_score = self.gui.get_node(\"score/val\")
 	self.gui_shrooms = self.gui.get_node(\"shrooms/val\")
@@ -226,6 +227,7 @@ func move_player(x, y, xx, yy):
 	self.player.set_position()
 	if check_trigger(self.player.x, self.player.y):
 		if self.GAME_MODE == self.GAME_MODE_WIN:
+			self.audio.play(\"win\")
 			self.game_over(true)
 			self.game_anim.play('fade-out')
 			return false
@@ -243,11 +245,13 @@ func check_shrooms(player):
 	for node in get_tree().get_nodes_in_group(self.GROUP_SHROOMS):
 		if node.check_near_by(player):
 			self.shrooms += 1
+			self.audio.play(\"shroom\")
 			node.anim.play(\"die\")
 
 func check_visibility(player):
 	for node in get_tree().get_nodes_in_group(self.GROUP_SNAKES):
-		node.check_visibility(player)
+		if node.check_visibility(player):
+			self.audio.play(\"snake\")
 	
 func _input(event):
 	var now = self.anim.get_current_animation()
@@ -276,7 +280,7 @@ func _input(event):
 			else:
 				self.dirty = true
 				self.fails += 1
-				self.audio.play(\"jump\") # !TODO! CHANGE TO ERROR SOUND
+				self.audio.play(\"fail\")
 				move_snakes(get_tree().get_nodes_in_group(self.GROUP_SNAKES), self.player)
 				
 func move_post_anim():
@@ -354,16 +358,7 @@ func _fixed_process(delta):
 func move_snakes(snakes, player):
 	pass"
 
-[sub_resource type="SampleLibrary" id=2]
-
-samples/jump = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 5 )
-}
-
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=2]
 
 resource/name = "fade-in"
 length = 2.0
@@ -380,7 +375,7 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=3]
 
 resource/name = "fade-out"
 length = 1.5
@@ -399,7 +394,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=4]
 
-resource/name = "show_gui"
 length = 1.0
 loop = false
 step = 0.1
@@ -416,7 +410,6 @@ tracks/0/keys = {
 
 [node name="main" type="Node2D"]
 
-visibility/opacity = 0.0
 script/script = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -476,7 +469,7 @@ margin/bottom = -202.0
 
 [node name="bottom" type="CenterContainer" parent="entities/player/camera"]
 
-visibility/opacity = 0.0
+anchor/top = 1
 anchor/right = 1
 anchor/bottom = 1
 rect/scale = Vector2( 2, 2 )
@@ -484,16 +477,44 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = -20.0
-margin/top = 144.0
-margin/right = 84.0
-margin/bottom = -80.0
+margin/left = 0.0
+margin/top = -76.0
+margin/right = 64.0
+margin/bottom = -76.0
 use_top_left = false
 
-[node name="gui" parent="entities/player/camera/bottom" instance=ExtResource( 4 )]
+[node name="anchor" type="Control" parent="entities/player/camera/bottom"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+
+[node name="gui" parent="entities/player/camera/bottom/anchor" instance=ExtResource( 4 )]
 
 editor/display_folded = true
 rect/scale = Vector2( 1, 1 )
+
+[node name="war_room" parent="entities/player/camera/bottom/anchor" instance=ExtResource( 5 )]
+
+editor/display_folded = true
+visibility/visible = false
+margin/left = 0.0
+margin/top = 80.0
+margin/right = 0.0
+margin/bottom = 80.0
+
+[node name="grass" parent="entities/player/camera/bottom/anchor/war_room/Panel/entity"]
+
+frame = 0
+
+[node name="letter" parent="entities/player/camera/bottom/anchor/war_room"]
+
+editor/display_folded = true
 
 [node name="audio" type="SamplePlayer2D" parent="."]
 
@@ -503,7 +524,7 @@ params/attenuation/min_distance = 1.0
 params/attenuation/max_distance = 2048.0
 params/attenuation/distance_exp = 1.0
 config/polyphony = 1
-config/samples = SubResource( 2 )
+config/samples = ExtResource( 6 )
 config/pitch_random = 0.0
 
 [node name="anim" type="AnimationPlayer" parent="."]
@@ -511,8 +532,8 @@ config/pitch_random = 0.0
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/fade-in = SubResource( 14 )
-anims/fade-out = SubResource( 15 )
+anims/fade-in = SubResource( 2 )
+anims/fade-out = SubResource( 3 )
 anims/show_gui = SubResource( 4 )
 playback/active = true
 playback/speed = 2.0
@@ -521,4 +542,5 @@ autoplay = "fade-in"
 
 
 [editable path="entities/player"]
-[editable path="entities/player/camera/bottom/gui"]
+[editable path="entities/player/camera/bottom/anchor/war_room"]
+[editable path="entities/player/camera/bottom/anchor/war_room/letter"]
