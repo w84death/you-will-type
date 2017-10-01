@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://sprites/filmgrain.png" type="Texture" id=1]
+[ext_resource path="res://sprites/light.png" type="Texture" id=2]
+[ext_resource path="res://sprites/white.png" type="Texture" id=3]
+
+[sub_resource type="CanvasItemShader" id=1]
+
+_code = {
+"fragment": "uniform color base=color(0.5,0.5,0.5,1);
+uniform texture grain;
+uniform float grain_strength=0.1;
+uniform texture vignette;
+uniform float fps=12;
+uniform float stretch = 0.5;
+uniform float flashing=0.01;
+
+vec3 c = texscreen(SCREEN_UV);
+
+//float v = max(c.r,max(c.g,c.b));
+float v = dot(c,vec3(0.2,0.1,0.7));
+v=sqrt(v);
+//v*=v;
+float make_grain(float time) {
+
+	vec2 ofs = vec2(sin(41*time*sin(time*123)),sin(27*time*sin(time*312)));
+	return tex(grain,(UV+mod(ofs,vec2(1,1)))*stretch).r;
+}
+
+float f = 1.0/fps;
+float g = make_grain(TIME-mod(TIME,f));
+g=max(g,make_grain(TIME-mod(TIME,f)+f)*0.5);
+g=max(g,make_grain(TIME-mod(TIME,f)+f*2.0)*0.25);
+
+
+COLOR.rgb= base.rgb*v-vec3(g)*grain_strength;
+//COLOR.rgb*=tex(vignette,UV).r;
+float ft = TIME * 0.002;
+COLOR.rgb+=vec3(sin(75*ft*sin(ft*123)))*flashing;",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+
+[sub_resource type="CanvasItemMaterial" id=2]
+
+shader/shader = SubResource( 1 )
+shader/shading_mode = 0
+shader_param/base = Color( 1, 0.976807, 0.921875, 1 )
+shader_param/grain = ExtResource( 1 )
+shader_param/grain_strength = 0.5
+shader_param/vignette = ExtResource( 2 )
+shader_param/fps = 12.0
+shader_param/stretch = 0.5
+shader_param/flashing = 0.015
+
+[node name="old_film" type="TextureFrame"]
+
+visibility/opacity = 0.2
+material/material = SubResource( 2 )
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -53.0
+margin/top = -36.0
+margin/right = 53.0
+margin/bottom = 36.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 0
+
+

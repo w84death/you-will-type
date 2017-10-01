@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://gui_theme-blue.tres" type="Theme" id=1]
 [ext_resource path="res://gui_theme-green.tres" type="Theme" id=2]
-[ext_resource path="res://entity.tscn" type="PackedScene" id=3]
+[ext_resource path="res://snake.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/hexes.png" type="Texture" id=4]
-[ext_resource path="res://snake.tscn" type="PackedScene" id=5]
-[ext_resource path="res://letter.tscn" type="PackedScene" id=6]
+[ext_resource path="res://entity.tscn" type="PackedScene" id=5]
 
 [node name="war_room" type="Control"]
 
@@ -37,30 +36,9 @@ margin/top = -40.0
 margin/right = -60.0
 margin/bottom = -40.0
 
-[node name="Label" type="Label" parent="Panel"]
-
-anchor/right = 1
-anchor/bottom = 1
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 4.0
-margin/top = 4.0
-margin/right = 4.0
-margin/bottom = 68.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "you vs snake"
-align = 1
-valign = 1
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
 [node name="snake_stats" type="Panel" parent="Panel"]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -68,12 +46,12 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 2 )
-margin/left = 104.0
-margin/top = 11.0
-margin/right = -20.0
-margin/bottom = 49.0
+margin/left = 105.0
+margin/top = 3.0
+margin/right = -21.0
+margin/bottom = 57.0
 
-[node name="Label1" type="Label" parent="Panel/snake_stats"]
+[node name="val" type="Label" parent="Panel/snake_stats"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -95,8 +73,21 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="snake" parent="Panel" instance=ExtResource( 3 )]
+
+editor/display_folded = true
+transform/pos = Vector2( 95, 12 )
+
+[node name="grass1" type="Sprite" parent="Panel/snake"]
+
+transform/pos = Vector2( 10, 12 )
+texture = ExtResource( 4 )
+region = true
+region_rect = Rect2( 160, 22, 20, 22 )
+
 [node name="player_stats" type="Panel" parent="Panel"]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -104,12 +95,12 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 2 )
-margin/left = -19.0
+margin/left = -20.0
 margin/top = 45.0
-margin/right = 103.0
+margin/right = 104.0
 margin/bottom = 15.0
 
-[node name="Label1" type="Label" parent="Panel/player_stats"]
+[node name="val" type="Label" parent="Panel/player_stats"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -131,8 +122,9 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="letters_left" type="Panel" parent="Panel"]
+[node name="time_left" type="Panel" parent="Panel"]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -140,12 +132,12 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 2 )
-margin/left = 42.0
-margin/top = 68.0
-margin/right = 42.0
-margin/bottom = -8.0
+margin/left = 74.0
+margin/top = 69.0
+margin/right = 10.0
+margin/bottom = -9.0
 
-[node name="Label1" type="Label" parent="Panel/letters_left"]
+[node name="val" type="Label" parent="Panel/time_left"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -159,7 +151,7 @@ margin/right = 0.0
 margin/bottom = 0.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "01:59"
+text = "00:17"
 align = 1
 valign = 1
 uppercase = true
@@ -167,62 +159,100 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="entity" parent="Panel" instance=ExtResource( 3 )]
+[node name="player" parent="Panel" instance=ExtResource( 5 )]
 
-transform/pos = Vector2( 6, 52 )
+editor/display_folded = true
+transform/pos = Vector2( 5, 52 )
 
-[node name="grass" type="Sprite" parent="Panel/entity"]
-
-transform/pos = Vector2( 10, 12 )
-texture = ExtResource( 4 )
-frame = 35
-region = true
-region_rect = Rect2( 160, 22, 20, 22 )
-
-[node name="snake" parent="Panel" instance=ExtResource( 5 )]
-
-transform/pos = Vector2( 94, 20 )
-
-[node name="grass1" type="Sprite" parent="Panel/snake"]
+[node name="grass" type="Sprite" parent="Panel/player"]
 
 transform/pos = Vector2( 10, 12 )
 texture = ExtResource( 4 )
 region = true
 region_rect = Rect2( 160, 22, 20, 22 )
 
-[node name="letter" parent="." instance=ExtResource( 6 )]
+[node name="_title" type="Label" parent="Panel"]
 
-[node name="letter1" parent="." instance=ExtResource( 6 )]
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 4.0
+margin/top = 4.0
+margin/right = 4.0
+margin/bottom = 68.0
+custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "snake says:"
+valign = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
-transform/pos = Vector2( -20, -16 )
-letter = "c"
+[node name="words" type="Label" parent="Panel"]
 
-[node name="letter2" parent="." instance=ExtResource( 6 )]
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 4.0
+margin/top = 12.0
+margin/right = 32.0
+margin/bottom = 40.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "lorem ipsum dolor amet sid"
+autowrap = true
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
-transform/pos = Vector2( -12, -16 )
+[node name="_info" type="Label" parent="Panel"]
 
-[node name="letter3" parent="." instance=ExtResource( 6 )]
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 28.0
+margin/top = 60.0
+margin/right = 6.0
+margin/bottom = 1.0
+custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "write snakes words
+time left:"
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
-transform/pos = Vector2( -4, -16 )
-letter = "t"
+[node name="input" type="LineEdit" parent="Panel"]
 
-[node name="letter4" parent="." instance=ExtResource( 6 )]
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 28.0
+margin/top = 44.0
+margin/right = 116.0
+margin/bottom = 56.0
+placeholder/text = "START TYPING..."
+placeholder/alpha = 0.6
+focus_mode = 2
+caret/caret_blink = false
+caret/caret_blink_speed = 0.65
 
-transform/pos = Vector2( -48, -24 )
-letter = "z"
+[node name="camera" type="Camera2D" parent="."]
 
-[node name="letter5" parent="." instance=ExtResource( 6 )]
-
-transform/pos = Vector2( -32, 0 )
-letter = "o"
-
-[node name="letter6" parent="." instance=ExtResource( 6 )]
-
-transform/pos = Vector2( -24, 0 )
-letter = "f"
-
-[node name="Camera2D" type="Camera2D" parent="."]
-
+visibility/visible = false
 anchor_mode = 1
 rotating = false
 current = true

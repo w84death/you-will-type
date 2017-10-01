@@ -1,10 +1,14 @@
-[gd_scene load_steps=21 format=1]
+[gd_scene load_steps=25 format=1]
 
 [ext_resource path="res://terrain-tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://blur.tscn" type="PackedScene" id=2]
-[ext_resource path="res://logo.tscn" type="PackedScene" id=3]
-[ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=4]
-[ext_resource path="res://snake.tscn" type="PackedScene" id=5]
+[ext_resource path="res://old_film.tscn" type="PackedScene" id=3]
+[ext_resource path="res://logo.tscn" type="PackedScene" id=4]
+[ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=5]
+[ext_resource path="res://snake.tscn" type="PackedScene" id=6]
+[ext_resource path="res://a-typical-button.tscn" type="PackedScene" id=7]
+[ext_resource path="res://music.tscn" type="PackedScene" id=8]
+[ext_resource path="res://sounds/end.ogg" type="AudioStream" id=9]
 
 [sub_resource type="GDScript" id=1]
 
@@ -98,7 +102,7 @@ shader/shading_mode = 1
 font/size = 8
 font/use_mipmaps = true
 font/use_filter = false
-font/font = ExtResource( 4 )
+font/font = ExtResource( 5 )
 
 [sub_resource type="Animation" id=5]
 
@@ -550,7 +554,14 @@ margin/top = -395.0
 margin/right = -692.0
 margin/bottom = -393.0
 
-[node name="logo" parent="point" instance=ExtResource( 3 )]
+[node name="old_film" parent="point" instance=ExtResource( 3 )]
+
+margin/left = -700.0
+margin/top = -403.0
+margin/right = -700.0
+margin/bottom = -413.0
+
+[node name="logo" parent="point" instance=ExtResource( 4 )]
 
 transform/pos = Vector2( -15, -224 )
 
@@ -755,7 +766,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="snake" parent="point" instance=ExtResource( 5 )]
+[node name="snake" parent="point" instance=ExtResource( 6 )]
 
 editor/display_folded = true
 transform/pos = Vector2( -132, -140 )
@@ -777,6 +788,17 @@ anims/move_e = SubResource( 11 )
 anims/move_q = SubResource( 12 )
 anims/move_z = SubResource( 13 )
 
+[node name="press" parent="point" instance=ExtResource( 7 )]
+
+margin/left = -632.0
+margin/top = 300.0
+margin/right = -504.0
+margin/bottom = 321.0
+
+[node name="press" parent="point/press"]
+
+text = "spacebar > back to menu"
+
 [node name="anim" type="AnimationPlayer" parent="."]
 
 playback/process_mode = 1
@@ -789,5 +811,11 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "fade-in"
 
+[node name="music" parent="." instance=ExtResource( 8 )]
+
+stream/stream = ExtResource( 9 )
+
 
 [editable path="point/snake"]
+[editable path="point/press"]
+[editable path="music"]

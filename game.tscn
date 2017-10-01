@@ -1,11 +1,14 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://levels/level1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://entity.tscn" type="PackedScene" id=2]
 [ext_resource path="res://blur.tscn" type="PackedScene" id=3]
-[ext_resource path="res://gui.tscn" type="PackedScene" id=4]
-[ext_resource path="res://war_room.tscn" type="PackedScene" id=5]
-[ext_resource path="res://sounds/audio-library.tres" type="SampleLibrary" id=6]
+[ext_resource path="res://old_film.tscn" type="PackedScene" id=4]
+[ext_resource path="res://gui.tscn" type="PackedScene" id=5]
+[ext_resource path="res://war_room.tscn" type="PackedScene" id=6]
+[ext_resource path="res://sounds/audio-library.tres" type="SampleLibrary" id=7]
+[ext_resource path="res://music.tscn" type="PackedScene" id=8]
+[ext_resource path="res://sounds/game.ogg" type="AudioStream" id=9]
 
 [sub_resource type="GDScript" id=1]
 
@@ -79,7 +82,7 @@ const MODE_LETTERS = 0
 const MODE_NUMBERS = 1
 const MODE_HARDCODE = 2
 var GAME_MODE = MODE_LETTERS
-var GAME_MODE_WIN = MODE_NUMBERS
+var GAME_MODE_WIN = MODE_HARDCODE
 
 const TILE_SHROOM = 28
 const TILE_SNAKE = 29
@@ -264,7 +267,7 @@ func _input(event):
 		self.gui_anim.play(\"press\")
 		var hit = OS.get_scancode_string(event.unicode)
 		if now == \"idle\":
-			if hit in get_visible_letters():
+			if hit.to_upper() in get_visible_letters():
 				register_time()
 				if not self.dirty:
 					self.score += POINTS_PERFECT
@@ -410,6 +413,7 @@ tracks/0/keys = {
 
 [node name="main" type="Node2D"]
 
+visibility/opacity = 0.0
 script/script = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -433,7 +437,7 @@ editor/display_folded = true
 
 [node name="camera" type="Camera2D" parent="entities/player"]
 
-transform/pos = Vector2( 10, 4 )
+transform/pos = Vector2( 40, 4 )
 transform/scale = Vector2( 0.5, 0.5 )
 z/z = 999
 z/relative = false
@@ -450,10 +454,10 @@ drag_margin/h_enabled = true
 drag_margin/v_enabled = true
 smoothing/enable = true
 smoothing/speed = 4.0
-drag_margin/left = 0.05
-drag_margin/top = 0.05
-drag_margin/right = 0.05
-drag_margin/bottom = 0.05
+drag_margin/left = 1.0
+drag_margin/top = 1.0
+drag_margin/right = 1.0
+drag_margin/bottom = 1.0
 
 [node name="blur" parent="entities/player/camera" instance=ExtResource( 3 )]
 
@@ -467,6 +471,13 @@ margin/top = 298.0
 margin/right = -354.0
 margin/bottom = -202.0
 
+[node name="old_film" parent="entities/player/camera" instance=ExtResource( 4 )]
+
+margin/left = -447.0
+margin/top = -264.0
+margin/right = -362.0
+margin/bottom = -178.0
+
 [node name="bottom" type="CenterContainer" parent="entities/player/camera"]
 
 anchor/top = 1
@@ -477,9 +488,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 0.0
+margin/left = -36.0
 margin/top = -76.0
-margin/right = 64.0
+margin/right = 100.0
 margin/bottom = -76.0
 use_top_left = false
 
@@ -494,12 +505,12 @@ margin/top = 0.0
 margin/right = 0.0
 margin/bottom = 0.0
 
-[node name="gui" parent="entities/player/camera/bottom/anchor" instance=ExtResource( 4 )]
+[node name="gui" parent="entities/player/camera/bottom/anchor" instance=ExtResource( 5 )]
 
 editor/display_folded = true
 rect/scale = Vector2( 1, 1 )
 
-[node name="war_room" parent="entities/player/camera/bottom/anchor" instance=ExtResource( 5 )]
+[node name="war_room" parent="entities/player/camera/bottom/anchor" instance=ExtResource( 6 )]
 
 editor/display_folded = true
 visibility/visible = false
@@ -507,14 +518,6 @@ margin/left = 0.0
 margin/top = 80.0
 margin/right = 0.0
 margin/bottom = 80.0
-
-[node name="grass" parent="entities/player/camera/bottom/anchor/war_room/Panel/entity"]
-
-frame = 0
-
-[node name="letter" parent="entities/player/camera/bottom/anchor/war_room"]
-
-editor/display_folded = true
 
 [node name="audio" type="SamplePlayer2D" parent="."]
 
@@ -524,7 +527,7 @@ params/attenuation/min_distance = 1.0
 params/attenuation/max_distance = 2048.0
 params/attenuation/distance_exp = 1.0
 config/polyphony = 1
-config/samples = ExtResource( 6 )
+config/samples = ExtResource( 7 )
 config/pitch_random = 0.0
 
 [node name="anim" type="AnimationPlayer" parent="."]
@@ -540,7 +543,12 @@ playback/speed = 2.0
 blend_times = [  ]
 autoplay = "fade-in"
 
+[node name="music" parent="." instance=ExtResource( 8 )]
+
+stream/stream = ExtResource( 9 )
+stream/volume_db = -5.0
+
 
 [editable path="entities/player"]
 [editable path="entities/player/camera/bottom/anchor/war_room"]
-[editable path="entities/player/camera/bottom/anchor/war_room/letter"]
+[editable path="music"]

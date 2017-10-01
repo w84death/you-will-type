@@ -1,0 +1,254 @@
+[gd_scene load_steps=13 format=1]
+
+[ext_resource path="res://sprites/white.png" type="Texture" id=1]
+[ext_resource path="res://sprites/godot-logo.png" type="Texture" id=2]
+[ext_resource path="res://sprites/header-logo.png" type="Texture" id=3]
+[ext_resource path="res://sprites/black_400px.png" type="Texture" id=4]
+[ext_resource path="res://gui_theme-blue.tres" type="Theme" id=5]
+[ext_resource path="res://a-typical-button.tscn" type="PackedScene" id=6]
+[ext_resource path="res://music.tscn" type="PackedScene" id=7]
+[ext_resource path="res://sounds/intro.ogg" type="AudioStream" id=8]
+
+[sub_resource type="CanvasItemShaderGraph" id=1]
+
+_code = {
+"fragment": "vec3 nd2sl0=vec3(1,1,1);
+float nd2sl1=1;
+COLOR.rgb=nd2sl0;
+COLOR.a=nd2sl1;
+",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+_data = {
+"shaders": [ [ 0, 33, Vector2( 350, 40 ), null, null, [  ], 1, 0, Vector2( 50, 40 ), null, null, [  ] ], [ 0, 33, Vector2( 451, 47 ), null, null, [ 0, 2, 0, 1, 2, 1 ], 1, 0, Vector2( 45, 47 ), null, null, [  ], 2, 3, Vector2( 270, 24 ), Color( 1, 1, 1, 1 ), null, [  ] ], [ 0, 33, Vector2( 350, 40 ), null, null, [  ], 1, 0, Vector2( 50, 40 ), null, null, [  ] ] ]
+}
+
+[sub_resource type="CanvasItemMaterial" id=2]
+
+shader/shader = SubResource( 1 )
+shader/shading_mode = 0
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends CenterContainer
+
+func _ready():
+	set_process_input(true)
+
+func _input(event):
+	if(Input.is_key_pressed(KEY_ESCAPE)):
+		get_tree().quit()
+	elif(Input.is_key_pressed(KEY_SPACE)):
+		get_tree().change_scene(\"res://menu.tscn\")"
+
+[sub_resource type="Animation" id=4]
+
+resource/name = "intro"
+length = 6.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("center/p1x:visibility/opacity")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.5, 1, 1.5 ),
+"transitions": FloatArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0, 1.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("center/aseprite:visibility/opacity")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 1.5, 2, 2.5, 3 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0, 1.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("center/godot:visibility/opacity")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0, 3, 3.5, 4, 4.5 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0, 1.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("center/credits:visibility/opacity")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 5, 5.5 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+
+[node name="intro" type="CenterContainer"]
+
+material/material = SubResource( 2 )
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+use_top_left = false
+script/script = SubResource( 3 )
+
+[node name="center" type="Control" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 683.0
+margin/top = 384.0
+margin/right = 683.0
+margin/bottom = 384.0
+
+[node name="bg" type="Sprite" parent="center"]
+
+transform/scale = Vector2( 43, 24 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="godot" type="Sprite" parent="center"]
+
+visibility/opacity = 0.0
+texture = ExtResource( 2 )
+
+[node name="aseprite" type="Sprite" parent="center"]
+
+visibility/opacity = 0.0
+texture = ExtResource( 3 )
+
+[node name="p1x" type="Sprite" parent="center"]
+
+visibility/opacity = 0.0
+texture = ExtResource( 4 )
+
+[node name="credits" type="Control" parent="center"]
+
+editor/display_folded = true
+visibility/opacity = 0.0
+anchor/right = 1
+anchor/bottom = 1
+rect/scale = Vector2( 2, 2 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+
+[node name="Panel" type="Panel" parent="center/credits"]
+
+rect/scale = Vector2( 2, 2 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+theme/theme = ExtResource( 5 )
+margin/left = -127.0
+margin/top = -180.0
+margin/right = 1.0
+margin/bottom = -9.0
+
+[node name="credsss" type="Label" parent="center/credits/Panel"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 6.0
+margin/top = 6.0
+margin/right = 158.0
+margin/bottom = 142.0
+custom_constants/line_spacing = 0
+text = "You Will Type by P1X / 2017
+-----------------------------
+
+# code/gfx
+Krzysztof Jankowski
+
+# music
+Vintage Synth Loops
+> Scirra Store
+
+# tech
+Godot Engine
+GitHub
+Aseprite
+
+# visit
+http://p1x.in"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="credsss1" type="Label" parent="center/credits/Panel"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 67.0
+margin/top = 126.0
+margin/right = 123.0
+margin/bottom = 142.0
+custom_constants/line_spacing = 0
+text = "# paypall
+donate@p1x.in"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="press" parent="center/credits/Panel" instance=ExtResource( 6 )]
+
+rect/scale = Vector2( 1, 1 )
+margin/left = 19.0
+margin/top = 157.0
+margin/right = 112.0
+margin/bottom = 178.0
+
+[node name="press" parent="center/credits/Panel/press"]
+
+margin/left = 4.0
+margin/right = 88.0
+text = "spacecbar > menu"
+
+[node name="music" parent="." instance=ExtResource( 7 )]
+
+stream/stream = ExtResource( 8 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/intro = SubResource( 4 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "intro"
+
+
+[editable path="center/credits/Panel/press"]
+[editable path="music"]

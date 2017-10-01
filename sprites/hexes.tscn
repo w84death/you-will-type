@@ -87,6 +87,13 @@ texture = ExtResource( 1 )
 region = true
 region_rect = Rect2( 20, 66, 20, 22 )
 
+[node name="forest5" type="Sprite" parent="."]
+
+transform/pos = Vector2( 60, 150 )
+texture = ExtResource( 1 )
+region = true
+region_rect = Rect2( 40, 110, 20, 22 )
+
 [node name="road" type="Sprite" parent="."]
 
 transform/pos = Vector2( 90, 0 )
