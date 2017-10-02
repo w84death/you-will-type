@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=1]
+[gd_scene load_steps=29 format=1]
 
 [ext_resource path="res://terrain-tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://shroom.tscn" type="PackedScene" id=2]
@@ -11,8 +11,9 @@
 [ext_resource path="res://letter.tscn" type="PackedScene" id=9]
 [ext_resource path="res://gui_theme-blue.tres" type="Theme" id=10]
 [ext_resource path="res://fonts/04B_03__.TTF" type="DynamicFontData" id=11]
-[ext_resource path="res://sounds/audio-library.tres" type="SampleLibrary" id=12]
-[ext_resource path="res://music.tscn" type="PackedScene" id=13]
+[ext_resource path="res://sprites/hexes.png" type="Texture" id=12]
+[ext_resource path="res://sounds/audio-library.tres" type="SampleLibrary" id=13]
+[ext_resource path="res://music.tscn" type="PackedScene" id=14]
 
 [sub_resource type="GDScript" id=1]
 
@@ -774,17 +775,17 @@ anchor/top = 3
 anchor/right = 3
 anchor/bottom = 3
 rect/min_size = Vector2( 1200, 500 )
-margin/left = 876.0
-margin/top = 439.0
-margin/right = -1942.0
-margin/bottom = -377.0
+margin/left = 875.0
+margin/top = 440.0
+margin/right = -1943.0
+margin/bottom = -376.0
 
 [node name="old_film" parent="center/point/camera" instance=ExtResource( 6 )]
 
-margin/left = -842.0
-margin/top = -485.0
-margin/right = -720.0
-margin/bottom = -392.0
+margin/left = -843.0
+margin/top = -480.0
+margin/right = -719.0
+margin/bottom = -397.0
 
 [node name="press" parent="center/point/camera" instance=ExtResource( 7 )]
 
@@ -855,10 +856,23 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 10 )
-margin/left = -92.0
-margin/top = -66.0
-margin/right = -14.0
-margin/bottom = 59.0
+margin/left = -95.0
+margin/top = -40.0
+margin/right = -5.0
+margin/bottom = 86.0
+
+[node name="highscores1" type="Panel" parent="center/point"]
+
+rect/scale = Vector2( 2, 2 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+theme/theme = ExtResource( 10 )
+margin/left = -103.0
+margin/top = -64.0
+margin/right = -5.0
+margin/bottom = -38.0
 
 [node name="instruction" type="Panel" parent="center/point"]
 
@@ -868,10 +882,10 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 10 )
-margin/left = 869.0
-margin/top = -251.0
-margin/right = 1038.0
-margin/bottom = -189.0
+margin/left = 857.0
+margin/top = -300.0
+margin/right = 1041.0
+margin/bottom = -204.0
 
 [node name="instruction" type="Label" parent="center/point/instruction"]
 
@@ -880,13 +894,16 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 10.0
-margin/top = 11.0
-margin/right = 158.0
-margin/bottom = 52.0
+margin/top = 14.0
+margin/right = 172.0
+margin/bottom = 88.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "1. go to the other city tile
+text = "1. Visit all the city tiles on the map
+
+
+
 2. react as fast as you can
 3. don't pause
 4. collect shrooms to boost score"
@@ -900,15 +917,60 @@ max_lines_visible = -1
 transform/pos = Vector2( 139.5, -18 )
 transform/scale = Vector2( 2, 2 )
 
-[node name="letter" parent="center/point/instruction/ready1" instance=ExtResource( 9 )]
+[node name="Sprite" type="Sprite" parent="center/point/instruction"]
 
-transform/pos = Vector2( -3.5, 5 )
-letter = "?"
+transform/pos = Vector2( 29, 38.5 )
+texture = ExtResource( 12 )
+region = true
+region_rect = Rect2( 140, 0, 20, 22 )
 
-[node name="letter1" parent="center/point/instruction/ready1" instance=ExtResource( 9 )]
+[node name="Sprite1" type="Sprite" parent="center/point/instruction"]
 
-transform/pos = Vector2( 66, 50.5 )
-letter = "?"
+transform/pos = Vector2( 53, 38.5 )
+texture = ExtResource( 12 )
+region = true
+region_rect = Rect2( 160, 0, 20, 22 )
+
+[node name="Sprite2" type="Sprite" parent="center/point/instruction"]
+
+transform/pos = Vector2( 77, 38.5 )
+texture = ExtResource( 12 )
+region = true
+region_rect = Rect2( 180, 0, 20, 22 )
+
+[node name="how_to_play" type="Panel" parent="center/point"]
+
+rect/scale = Vector2( 2, 2 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+theme/theme = ExtResource( 10 )
+margin/left = 841.0
+margin/top = -332.0
+margin/right = 937.0
+margin/bottom = -306.0
+
+[node name="instruction1" type="Label" parent="center/point/how_to_play"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 4.0
+margin/top = 4.0
+margin/right = 92.0
+margin/bottom = 22.0
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "how to play"
+align = 1
+valign = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="alpha" type="Panel" parent="center/point"]
 
@@ -918,10 +980,10 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 10 )
-margin/left = 1149.0
-margin/top = -71.0
-margin/right = 1318.0
-margin/bottom = -9.0
+margin/left = 1257.0
+margin/top = -48.0
+margin/right = 1432.0
+margin/bottom = 23.0
 
 [node name="instruction" type="Label" parent="center/point/alpha"]
 
@@ -930,9 +992,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 11.0
-margin/top = 10.0
-margin/right = 158.0
-margin/bottom = 51.0
+margin/top = 13.0
+margin/right = 166.0
+margin/bottom = 61.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -996,14 +1058,16 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = -19.0
-margin/top = -31.0
-margin/right = 32.0
-margin/bottom = -22.0
+margin/left = -37.0
+margin/top = -33.0
+margin/right = 54.0
+margin/bottom = -13.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "HIGH SCORES"
+align = 1
+valign = 1
 uppercase = true
 percent_visible = 1.0
 lines_skipped = 0
@@ -1016,9 +1080,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = -29.0
-margin/top = -15.0
+margin/top = -5.0
 margin/right = -22.0
-margin/bottom = 81.0
+margin/bottom = 91.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -1043,9 +1107,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = -19.0
-margin/top = -15.0
+margin/top = -5.0
 margin/right = 35.0
-margin/bottom = 82.0
+margin/bottom = 92.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -1084,10 +1148,10 @@ params/attenuation/min_distance = 1.0
 params/attenuation/max_distance = 2048.0
 params/attenuation/distance_exp = 1.0
 config/polyphony = 1
-config/samples = ExtResource( 12 )
+config/samples = ExtResource( 13 )
 config/pitch_random = 0.0
 
-[node name="music" parent="." instance=ExtResource( 13 )]
+[node name="music" parent="." instance=ExtResource( 14 )]
 
 
 [editable path="center/point/Control/shroom"]

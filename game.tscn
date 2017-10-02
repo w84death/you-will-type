@@ -265,9 +265,9 @@ func _input(event):
 	
 	if event.type == InputEvent.KEY and event.is_pressed():
 		self.gui_anim.play(\"press\")
-		var hit = OS.get_scancode_string(event.unicode)
+		var hit = OS.get_scancode_string(event.unicode).to_lower()
 		if now == \"idle\":
-			if hit.to_upper() in get_visible_letters():
+			if hit in get_visible_letters():
 				register_time()
 				if not self.dirty:
 					self.score += POINTS_PERFECT
@@ -515,9 +515,9 @@ rect/scale = Vector2( 1, 1 )
 editor/display_folded = true
 visibility/visible = false
 margin/left = 0.0
-margin/top = 80.0
+margin/top = 50.0
 margin/right = 0.0
-margin/bottom = 80.0
+margin/bottom = 50.0
 
 [node name="audio" type="SamplePlayer2D" parent="."]
 

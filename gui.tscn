@@ -99,9 +99,9 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 1 )
 margin/left = -111.0
-margin/top = -17.0
+margin/top = -16.0
 margin/right = -31.0
-margin/bottom = 15.0
+margin/bottom = 16.0
 
 [node name="score" type="Label" parent="score"]
 
@@ -111,9 +111,9 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 8.0
-margin/top = 0.0
-margin/right = 8.0
+margin/left = 9.0
+margin/top = 5.0
+margin/right = 7.0
 margin/bottom = 16.0
 custom_colors/font_color = Color( 0.6, 0.898039, 0.313726, 1 )
 text = "score"
@@ -130,7 +130,7 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 6.0
+margin/left = 9.0
 margin/top = 8.0
 margin/right = 6.0
 margin/bottom = 0.0
@@ -163,7 +163,7 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
-margin/top = 0.0
+margin/top = 4.0
 margin/right = 8.0
 margin/bottom = 16.0
 custom_colors/font_color = Color( 0.6, 0.898039, 0.313726, 1 )
@@ -216,7 +216,7 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 35.0
-margin/top = 0.0
+margin/top = 7.0
 margin/right = 3.0
 margin/bottom = 8.0
 custom_fonts/font = SubResource( 1 )
@@ -229,7 +229,7 @@ max_lines_visible = -1
 
 [node name="shroom" parent="shrooms" instance=ExtResource( 3 )]
 
-transform/pos = Vector2( 17, 4.5 )
+transform/pos = Vector2( 17, 8.5 )
 
 [node name="last" type="Panel" parent="."]
 
@@ -239,7 +239,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 1 )
 margin/left = -51.0
-margin/top = -13.0
+margin/top = -16.0
 margin/right = -3.0
 margin/bottom = 11.0
 
@@ -289,7 +289,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 1 )
 margin/left = 4.0
-margin/top = -13.0
+margin/top = -17.0
 margin/right = 52.0
 margin/bottom = 11.0
 
@@ -340,9 +340,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 4 )
-margin/left = -25.0
-margin/top = -26.0
-margin/right = 23.0
+margin/left = -24.0
+margin/top = -28.0
+margin/right = 24.0
 margin/bottom = -2.0
 
 [node name="val" type="Label" parent="speed"]
@@ -374,9 +374,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
-margin/top = 12.0
+margin/top = 11.0
 margin/right = 0.0
-margin/bottom = 0.0
+margin/bottom = 1.0
 custom_colors/font_color = Color( 0.843137, 0.482353, 0.729412, 1 )
 text = "reaction"
 align = 1
