@@ -413,7 +413,6 @@ tracks/0/keys = {
 
 [node name="main" type="Node2D"]
 
-visibility/opacity = 0.0
 script/script = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -483,7 +482,7 @@ margin/bottom = -178.0
 anchor/top = 1
 anchor/right = 1
 anchor/bottom = 1
-rect/scale = Vector2( 2, 2 )
+rect/scale = Vector2( 1.5, 1.5 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -508,16 +507,15 @@ margin/bottom = 0.0
 [node name="gui" parent="entities/player/camera/bottom/anchor" instance=ExtResource( 5 )]
 
 editor/display_folded = true
-rect/scale = Vector2( 1, 1 )
 
 [node name="war_room" parent="entities/player/camera/bottom/anchor" instance=ExtResource( 6 )]
 
 editor/display_folded = true
 visibility/visible = false
 margin/left = 0.0
-margin/top = 50.0
+margin/top = 63.0
 margin/right = 0.0
-margin/bottom = 50.0
+margin/bottom = 63.0
 
 [node name="audio" type="SamplePlayer2D" parent="."]
 

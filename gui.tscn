@@ -81,7 +81,6 @@ tracks/5/keys = {
 
 [node name="gui" type="Control"]
 
-rect/scale = Vector2( 2, 2 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2

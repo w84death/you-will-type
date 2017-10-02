@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://gui_theme-blue.tres" type="Theme" id=1]
-[ext_resource path="res://gui_theme-green.tres" type="Theme" id=2]
-[ext_resource path="res://snake.tscn" type="PackedScene" id=3]
-[ext_resource path="res://sprites/hexes.png" type="Texture" id=4]
-[ext_resource path="res://entity.tscn" type="PackedScene" id=5]
+[ext_resource path="res://health_panel.tres" type="Theme" id=2]
+[ext_resource path="res://sprites/hearths.png" type="Texture" id=3]
+[ext_resource path="res://snake.tscn" type="PackedScene" id=4]
+[ext_resource path="res://sprites/hexes.png" type="Texture" id=5]
+[ext_resource path="res://entity.tscn" type="PackedScene" id=6]
+[ext_resource path="res://gui_theme-green.tres" type="Theme" id=7]
 
 [node name="war_room" type="Control"]
 
@@ -36,7 +38,7 @@ margin/top = -52.0
 margin/right = -72.0
 margin/bottom = -52.0
 
-[node name="Panel1" type="Panel" parent="Panel"]
+[node name="header" type="Panel" parent="Panel"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -52,7 +54,6 @@ margin/bottom = 88.0
 
 [node name="snake_stats" type="Panel" parent="Panel"]
 
-editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -60,34 +61,33 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 2 )
-margin/left = 89.0
-margin/top = -23.0
+margin/left = 84.0
+margin/top = -20.0
 margin/right = 8.0
-margin/bottom = 107.0
+margin/bottom = 104.0
 
-[node name="val" type="Label" parent="Panel/snake_stats"]
+[node name="Sprite" type="Sprite" parent="Panel/snake_stats"]
 
-anchor/right = 1
-anchor/bottom = 1
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 0.0
-margin/bottom = 0.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "2/2 HP"
-align = 1
-valign = 1
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
+transform/pos = Vector2( 43, 10 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 9, 0, 9, 8 )
 
-[node name="snake" parent="Panel" instance=ExtResource( 3 )]
+[node name="Sprite1" type="Sprite" parent="Panel/snake_stats"]
+
+transform/pos = Vector2( 39, 10 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 9, 0, 9, 8 )
+
+[node name="Sprite2" type="Sprite" parent="Panel/snake_stats"]
+
+transform/pos = Vector2( 35, 10 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 9, 0, 9, 8 )
+
+[node name="snake" parent="Panel" instance=ExtResource( 4 )]
 
 editor/display_folded = true
 transform/pos = Vector2( 80, -12 )
@@ -95,7 +95,7 @@ transform/pos = Vector2( 80, -12 )
 [node name="grass1" type="Sprite" parent="Panel/snake"]
 
 transform/pos = Vector2( 10, 12 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 region = true
 region_rect = Rect2( 160, 22, 20, 22 )
 
@@ -109,41 +109,61 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 theme/theme = ExtResource( 2 )
 margin/left = 8.0
-margin/top = -23.0
-margin/right = 88.0
-margin/bottom = 107.0
+margin/top = -20.0
+margin/right = 84.0
+margin/bottom = 104.0
 
-[node name="val" type="Label" parent="Panel/player_stats"]
+[node name="Sprite6" type="Sprite" parent="Panel/player_stats"]
 
-anchor/right = 1
-anchor/bottom = 1
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 0.0
-margin/bottom = 0.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "10/10 HP"
-align = 1
-valign = 1
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
+transform/pos = Vector2( 9, 10 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 0, 0, 9, 8 )
 
-[node name="player" parent="Panel" instance=ExtResource( 5 )]
+[node name="Sprite1" type="Sprite" parent="Panel/player_stats"]
+
+transform/pos = Vector2( 13, 10 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 0, 0, 9, 8 )
+
+[node name="Sprite2" type="Sprite" parent="Panel/player_stats"]
+
+transform/pos = Vector2( 17, 10 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 0, 0, 9, 8 )
+
+[node name="Sprite3" type="Sprite" parent="Panel/player_stats"]
+
+transform/pos = Vector2( 21, 10 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 0, 0, 9, 8 )
+
+[node name="Sprite4" type="Sprite" parent="Panel/player_stats"]
+
+transform/pos = Vector2( 25, 10 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 0, 0, 9, 8 )
+
+[node name="Sprite5" type="Sprite" parent="Panel/player_stats"]
+
+transform/pos = Vector2( 29, 10 )
+texture = ExtResource( 3 )
+region = true
+region_rect = Rect2( 0, 0, 9, 8 )
+
+[node name="player" parent="Panel" instance=ExtResource( 6 )]
 
 editor/display_folded = true
 transform/pos = Vector2( 44, -12 )
 
 [node name="grass" type="Sprite" parent="Panel/player"]
 
-transform/pos = Vector2( 10, 12 )
-texture = ExtResource( 4 )
+transform/pos = Vector2( 9, 12 )
+texture = ExtResource( 5 )
 region = true
 region_rect = Rect2( 160, 22, 20, 22 )
 
@@ -198,9 +218,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 59.0
-margin/top = -5.0
+margin/top = -2.0
 margin/right = 57.0
-margin/bottom = 97.0
+margin/bottom = 94.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "vs"
@@ -256,10 +276,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 2 )
-margin/left = 47.0
-margin/top = 88.0
-margin/right = 47.0
+theme/theme = ExtResource( 7 )
+margin/left = 40.0
+margin/top = 84.0
+margin/right = 40.0
 margin/bottom = -8.0
 
 [node name="val" type="Label" parent="Panel/time_left"]
@@ -271,9 +291,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
-margin/top = 8.0
+margin/top = 11.0
 margin/right = 0.0
-margin/bottom = 0.0
+margin/bottom = 1.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "00:17"
@@ -293,9 +313,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
-margin/top = 4.0
+margin/top = 8.0
 margin/right = 2.0
-margin/bottom = 12.0
+margin/bottom = 16.0
 custom_colors/font_color = Color( 0.85098, 0.341176, 0.388235, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "time left:"
