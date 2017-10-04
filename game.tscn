@@ -122,6 +122,10 @@ func _ready():
 	set_fixed_process(true)
 	set_process_input(true)
 	
+	Globals.set('player_hp', 3)
+	Globals.set('snake_hp', 3)
+	Globals.set('snake_words', 3)
+	
 func change_state_from_animation():
 	var a = self.game_anim.get_current_animation()
 	if a == \"fade-in\":

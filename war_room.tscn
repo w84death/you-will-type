@@ -23,15 +23,16 @@ var time_left = 0
 var hp_player
 var hp_enemy
 var hearth = preload(\"res://hearth.tscn\")
-var words_count = 3
 var snake_node
 var player_alive = true
+var message
 
 func _ready():
 	self.input = self.get_node(\"board/input\")
 	self.words = self.get_node(\"board/words\")
 	self.hp_player = self.get_node(\"board/player_hp\")
 	self.hp_enemy = self.get_node(\"board/enemy_hp\")
+	self.message = self.get_node(\"board/message\")
 	set_process_input(true)
 
 func set_players_hp(p1, p2):
@@ -50,10 +51,15 @@ func set_players_hp(p1, p2):
 func check_player_response():
 	var player = self.input.get_text().to_lower().replace(' ','')
 	var enemy = self.current_string.to_lower().replace(' ','')
+	if player == '':
+		self.message.set_text('Write snakes words!')
+		return true
 	if  player == enemy:
 		reduce_health(self.hp_enemy)
+		self.message.set_text('Correct.')
 	else:
 		reduce_health(self.hp_player)
+		self.message.set_text('Wrong!')
 	
 	if check_hp(self.hp_player):
 		self.player_alive = true
@@ -83,12 +89,12 @@ func next_turn():
 	self.time_left = 17
 	self.input.clear()
 	self.words.set_text(\"\")
-	fill_words(self.words_count)
+	fill_words(Globals.get('snake_words'))
 	self.input.grab_focus()
 	
 func start_war(node):
 	self.snake_node = node
-	set_players_hp(3,3)
+	set_players_hp(Globals.get('player_hp'), Globals.get('snake_hp'))
 	self.war = true
 	self.show()
 	next_turn()
@@ -254,6 +260,27 @@ margin/bottom = 68.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "lorem ipsum dolor amet sid"
+autowrap = true
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="message" type="Label" parent="board"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 8.0
+margin/top = 70.0
+margin/right = 4.0
+margin/bottom = 26.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "lower case allowed"
 autowrap = true
 uppercase = true
 percent_visible = 1.0

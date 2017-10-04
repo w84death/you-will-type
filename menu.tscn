@@ -876,6 +876,7 @@ margin/bottom = -38.0
 
 [node name="instruction" type="Panel" parent="center/point"]
 
+editor/display_folded = true
 rect/scale = Vector2( 2, 2 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -912,11 +913,6 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="ready1" type="Node2D" parent="center/point/instruction"]
-
-transform/pos = Vector2( 139.5, -18 )
-transform/scale = Vector2( 2, 2 )
-
 [node name="Sprite" type="Sprite" parent="center/point/instruction"]
 
 transform/pos = Vector2( 29, 38.5 )
@@ -938,8 +934,55 @@ texture = ExtResource( 12 )
 region = true
 region_rect = Rect2( 180, 0, 20, 22 )
 
-[node name="how_to_play" type="Panel" parent="center/point"]
+[node name="snakes" type="Panel" parent="center/point"]
 
+rect/scale = Vector2( 2, 2 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+theme/theme = ExtResource( 10 )
+margin/left = 1261.0
+margin/top = -300.0
+margin/right = 1445.0
+margin/bottom = -204.0
+
+[node name="instruction" type="Label" parent="center/point/snakes"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 10.0
+margin/top = 48.0
+margin/right = 172.0
+margin/bottom = 72.0
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "1. walking near snake is dangerous
+2. he will attack
+3. losing to snake ends game"
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="snake" parent="center/point/snakes" instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 40, 20 )
+
+[node name="snake1" parent="center/point/snakes" instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 80, 20 )
+
+[node name="snake2" parent="center/point/snakes" instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 126, 20 )
+
+[node name="how_to_play_header" type="Panel" parent="center/point"]
+
+editor/display_folded = true
 rect/scale = Vector2( 2, 2 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -951,7 +994,7 @@ margin/top = -332.0
 margin/right = 937.0
 margin/bottom = -306.0
 
-[node name="instruction1" type="Label" parent="center/point/how_to_play"]
+[node name="instruction1" type="Label" parent="center/point/how_to_play_header"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -965,6 +1008,40 @@ custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "how to play"
+align = 1
+valign = 1
+uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="snakes_header" type="Panel" parent="center/point"]
+
+rect/scale = Vector2( 2, 2 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+theme/theme = ExtResource( 10 )
+margin/left = 1245.0
+margin/top = -332.0
+margin/right = 1341.0
+margin/bottom = -306.0
+
+[node name="instruction1" type="Label" parent="center/point/snakes_header"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 4.0
+margin/top = 4.0
+margin/right = 92.0
+margin/bottom = 22.0
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "snakes"
 align = 1
 valign = 1
 uppercase = true
@@ -998,10 +1075,12 @@ margin/bottom = 61.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "this is alpha release
-- snakes do nothing
+text = "this is beta release
+- there is one map
 - game is not balanced
-+ but it's still fun tu play :)"
++ but it's still fun tu play :)
+
+"
 uppercase = true
 percent_visible = 1.0
 lines_skipped = 0
@@ -1045,7 +1124,7 @@ margin/bottom = -63.0
 custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "VERSION ALPHA 9"
+text = "VERSION BETA 1"
 align = 1
 uppercase = true
 percent_visible = 1.0
