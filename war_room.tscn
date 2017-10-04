@@ -2,11 +2,124 @@
 
 [ext_resource path="res://gui_theme-blue.tres" type="Theme" id=1]
 [ext_resource path="res://health_panel.tres" type="Theme" id=2]
-[ext_resource path="res://sprites/hearths.png" type="Texture" id=3]
-[ext_resource path="res://snake.tscn" type="PackedScene" id=4]
-[ext_resource path="res://sprites/hexes.png" type="Texture" id=5]
-[ext_resource path="res://entity.tscn" type="PackedScene" id=6]
-[ext_resource path="res://gui_theme-green.tres" type="Theme" id=7]
+[ext_resource path="res://snake.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sprites/hexes.png" type="Texture" id=4]
+[ext_resource path="res://entity.tscn" type="PackedScene" id=5]
+[ext_resource path="res://gui_theme-green.tres" type="Theme" id=6]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Control
+
+var input
+var war = false
+var words
+const WORDS_BANK = ['hello', 'p1x', 'world', 'game', 'games', 
+	'history', 'pga', 'event', 'snake', 'mushroom', 'cat', 'dog',
+	'rat', 'woman', 'poland', ]
+var current_words = []
+var current_string = ''
+var time_left = 0
+var hp_player
+var hp_enemy
+var hearth = preload(\"res://hearth.tscn\")
+var words_count = 3
+var snake_node
+var player_alive = true
+
+func _ready():
+	self.input = self.get_node(\"board/input\")
+	self.words = self.get_node(\"board/words\")
+	self.hp_player = self.get_node(\"board/player_hp\")
+	self.hp_enemy = self.get_node(\"board/enemy_hp\")
+	set_process_input(true)
+
+func set_players_hp(p1, p2):
+	for i in range(0, p1):
+		var hp = self.hearth.instance()
+		hp.get_node(\"sprite\").set_frame(0)
+		hp.set_pos(Vector2(4 + (8*i), 6))
+		self.hp_player.add_child(hp)
+		
+	for i in range(0, p2):
+		var hp = self.hearth.instance()
+		hp.get_node(\"sprite\").set_frame(1)
+		hp.set_pos(Vector2(40 - (8*i), 6))
+		self.hp_enemy.add_child(hp)
+	
+func check_player_response():
+	var player = self.input.get_text().to_lower().replace(' ','')
+	var enemy = self.current_string.to_lower().replace(' ','')
+	if  player == enemy:
+		reduce_health(self.hp_enemy)
+	else:
+		reduce_health(self.hp_player)
+	
+	if check_hp(self.hp_player):
+		self.player_alive = true
+		return check_hp(self.hp_enemy)
+	else:
+		self.player_alive = false
+		return false
+	
+func reduce_health(entity):
+	for hp in entity.get_children():
+		entity.remove_child(hp)
+		return true
+	return false
+	
+func check_hp(player):
+	var hp = player.get_child_count()
+	return hp > 0
+	
+func _input(event):
+	if(Input.is_key_pressed(KEY_RETURN)):
+		if check_player_response():
+			next_turn()
+		else:
+			self.war = false
+
+func next_turn():
+	self.time_left = 17
+	self.input.clear()
+	self.words.set_text(\"\")
+	fill_words(self.words_count)
+	self.input.grab_focus()
+	
+func start_war(node):
+	self.snake_node = node
+	set_players_hp(3,3)
+	self.war = true
+	self.show()
+	next_turn()
+
+func fill_words(words_count):
+	self.current_words = []
+	self.current_string = ''
+	var words = self.WORDS_BANK
+	
+	for i in range(words_count):
+		words = new_word(words)
+		
+	for word in self.current_words:
+		self.current_string += ' ' + str(word)
+	self.words.set_text(self.current_string)
+	
+func new_word(words):
+	var rand_id = int(rand_range(0,words.size()))
+	var random_word = words[rand_id]
+	self.current_words.append(random_word)
+	words.remove(rand_id)
+	return words
+
+func check_close():
+	if not self.war:
+		self.hide()
+		return self.snake_node
+	return false
+
+func is_player_alive():
+	return self.player_alive"
 
 [node name="war_room" type="Control"]
 
@@ -22,8 +135,9 @@ margin/left = 683.0
 margin/top = 384.0
 margin/right = 683.0
 margin/bottom = 384.0
+script/script = SubResource( 1 )
 
-[node name="Panel" type="Panel" parent="."]
+[node name="board" type="Panel" parent="."]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -38,7 +152,7 @@ margin/top = -52.0
 margin/right = -72.0
 margin/bottom = -52.0
 
-[node name="header" type="Panel" parent="Panel"]
+[node name="header" type="Panel" parent="board"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -52,7 +166,7 @@ margin/top = -12.0
 margin/right = 28.0
 margin/bottom = 88.0
 
-[node name="snake_stats" type="Panel" parent="Panel"]
+[node name="enemy_hp" type="Panel" parent="board"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -66,40 +180,19 @@ margin/top = -20.0
 margin/right = 8.0
 margin/bottom = 104.0
 
-[node name="Sprite" type="Sprite" parent="Panel/snake_stats"]
-
-transform/pos = Vector2( 43, 10 )
-texture = ExtResource( 3 )
-region = true
-region_rect = Rect2( 9, 0, 9, 8 )
-
-[node name="Sprite1" type="Sprite" parent="Panel/snake_stats"]
-
-transform/pos = Vector2( 39, 10 )
-texture = ExtResource( 3 )
-region = true
-region_rect = Rect2( 9, 0, 9, 8 )
-
-[node name="Sprite2" type="Sprite" parent="Panel/snake_stats"]
-
-transform/pos = Vector2( 35, 10 )
-texture = ExtResource( 3 )
-region = true
-region_rect = Rect2( 9, 0, 9, 8 )
-
-[node name="snake" parent="Panel" instance=ExtResource( 4 )]
+[node name="snake" parent="board" instance=ExtResource( 3 )]
 
 editor/display_folded = true
 transform/pos = Vector2( 80, -12 )
 
-[node name="grass1" type="Sprite" parent="Panel/snake"]
+[node name="grass1" type="Sprite" parent="board/snake"]
 
 transform/pos = Vector2( 10, 12 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 region = true
 region_rect = Rect2( 160, 22, 20, 22 )
 
-[node name="player_stats" type="Panel" parent="Panel"]
+[node name="player_hp" type="Panel" parent="board"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -113,61 +206,19 @@ margin/top = -20.0
 margin/right = 84.0
 margin/bottom = 104.0
 
-[node name="Sprite6" type="Sprite" parent="Panel/player_stats"]
-
-transform/pos = Vector2( 9, 10 )
-texture = ExtResource( 3 )
-region = true
-region_rect = Rect2( 0, 0, 9, 8 )
-
-[node name="Sprite1" type="Sprite" parent="Panel/player_stats"]
-
-transform/pos = Vector2( 13, 10 )
-texture = ExtResource( 3 )
-region = true
-region_rect = Rect2( 0, 0, 9, 8 )
-
-[node name="Sprite2" type="Sprite" parent="Panel/player_stats"]
-
-transform/pos = Vector2( 17, 10 )
-texture = ExtResource( 3 )
-region = true
-region_rect = Rect2( 0, 0, 9, 8 )
-
-[node name="Sprite3" type="Sprite" parent="Panel/player_stats"]
-
-transform/pos = Vector2( 21, 10 )
-texture = ExtResource( 3 )
-region = true
-region_rect = Rect2( 0, 0, 9, 8 )
-
-[node name="Sprite4" type="Sprite" parent="Panel/player_stats"]
-
-transform/pos = Vector2( 25, 10 )
-texture = ExtResource( 3 )
-region = true
-region_rect = Rect2( 0, 0, 9, 8 )
-
-[node name="Sprite5" type="Sprite" parent="Panel/player_stats"]
-
-transform/pos = Vector2( 29, 10 )
-texture = ExtResource( 3 )
-region = true
-region_rect = Rect2( 0, 0, 9, 8 )
-
-[node name="player" parent="Panel" instance=ExtResource( 6 )]
+[node name="player" parent="board" instance=ExtResource( 5 )]
 
 editor/display_folded = true
 transform/pos = Vector2( 44, -12 )
 
-[node name="grass" type="Sprite" parent="Panel/player"]
+[node name="grass" type="Sprite" parent="board/player"]
 
 transform/pos = Vector2( 9, 12 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 region = true
 region_rect = Rect2( 160, 22, 20, 22 )
 
-[node name="_snake_says" type="Label" parent="Panel"]
+[node name="_snake_says" type="Label" parent="board"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -176,9 +227,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 8.0
-margin/top = 24.0
+margin/top = 16.0
 margin/right = 44.0
-margin/bottom = 68.0
+margin/bottom = 76.0
 custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "snake says:"
@@ -188,7 +239,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="words" type="Label" parent="Panel"]
+[node name="words" type="Label" parent="board"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -197,9 +248,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 8.0
-margin/top = 36.0
+margin/top = 28.0
 margin/right = 4.0
-margin/bottom = 56.0
+margin/bottom = 68.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "lorem ipsum dolor amet sid"
@@ -209,7 +260,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="_vs" type="Label" parent="Panel"]
+[node name="_vs" type="Label" parent="board"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -232,7 +283,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="_info" type="Label" parent="Panel"]
+[node name="_info" type="Label" parent="board"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -241,9 +292,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 8.0
-margin/top = 60.0
+margin/top = 44.0
 margin/right = 8.0
-margin/bottom = 36.0
+margin/bottom = 52.0
 custom_colors/font_color = Color( 0.372549, 0.803922, 0.894118, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "write snakes words:"
@@ -252,23 +303,23 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="input" type="LineEdit" parent="Panel"]
+[node name="input" type="LineEdit" parent="board"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 8.0
-margin/top = 68.0
+margin/top = 54.0
 margin/right = 136.0
-margin/bottom = 80.0
+margin/bottom = 66.0
 placeholder/text = "START TYPING..."
 placeholder/alpha = 0.6
 focus_mode = 2
 caret/caret_blink = false
 caret/caret_blink_speed = 0.65
 
-[node name="time_left" type="Panel" parent="Panel"]
+[node name="time_left" type="Panel" parent="board"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -276,13 +327,13 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-theme/theme = ExtResource( 7 )
+theme/theme = ExtResource( 6 )
 margin/left = 40.0
 margin/top = 84.0
 margin/right = 40.0
 margin/bottom = -8.0
 
-[node name="val" type="Label" parent="Panel/time_left"]
+[node name="val" type="Label" parent="board/time_left"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -296,7 +347,7 @@ margin/right = 0.0
 margin/bottom = 1.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "00:17"
+text = "unlimited"
 align = 1
 valign = 1
 uppercase = true
@@ -304,7 +355,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="time_left 2" type="Label" parent="Panel/time_left"]
+[node name="time_left 2" type="Label" parent="board/time_left"]
 
 anchor/right = 1
 anchor/bottom = 1

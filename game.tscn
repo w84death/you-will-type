@@ -30,6 +30,9 @@ var gui_last
 var gui_speed
 var gui_fails
 
+var at_war = false
+var war_room
+
 var dirty = false
 var terrain
 var entities
@@ -111,9 +114,10 @@ func _ready():
 	self.anim.connect(\"finished\", self, \"move_post_anim\")
 	self.game_anim.connect(\"finished\", self, \"change_state_from_animation\")
 	self.audio = self.get_node(\"audio\")
+	self.war_room = self.get_node(\"entities/player/camera/bottom/anchor/war_room\")
 	spawn_letters(self.player_bag)
 	auto_spawn_entities(self.terrain)
-	check_visibility(self.player)
+	check_snakes(self.player)
 	self.player.raise()
 	set_fixed_process(true)
 	set_process_input(true)
@@ -232,7 +236,6 @@ func move_player(x, y, xx, yy):
 		if self.GAME_MODE == self.GAME_MODE_WIN:
 			self.audio.play(\"win\")
 			self.game_over(true)
-			self.game_anim.play('fade-out')
 			return false
 		elif self.GAME_MODE == self.MODE_LETTERS:
 			self.GAME_MODE = self.MODE_NUMBERS
@@ -240,7 +243,7 @@ func move_player(x, y, xx, yy):
 			self.GAME_MODE = self.MODE_HARDCODE
 	randomize_letters(self.player)
 	check_letters(self.player, self.terrain)
-	check_visibility(self.player)
+	check_snakes(self.player)
 	check_shrooms(self.player)
 	self.timer = reset_timer()
 	
@@ -251,17 +254,38 @@ func check_shrooms(player):
 			self.audio.play(\"shroom\")
 			node.anim.play(\"die\")
 
-func check_visibility(player):
+func check_snakes(player):
 	for node in get_tree().get_nodes_in_group(self.GROUP_SNAKES):
-		if node.check_visibility(player):
-			self.audio.play(\"snake\")
+		if node.check_near_by(player):
+			show_war_room(node)
+			
+func show_war_room(node):
+	self.audio.play(\"snake\")
+	self.game_is_running = false
+	self.at_war = true
+	self.gui.hide()
+	self.war_room.start_war(node)
+
+func hide_war_room():
+	var snake = self.war_room.check_close()
+	if snake:
+		self.at_war = false
+		snake.anim.play(\"die\")
+		if self.war_room.is_player_alive():
+			self.game_is_running = true
+			self.gui.show()
+		else:
+			game_over(false)
 	
 func _input(event):
 	var now = self.anim.get_current_animation()
 	var frame = 6
 	if(Input.is_key_pressed(KEY_ESCAPE)):
 		get_tree().quit()
-	if not self.game_is_running: return false
+	
+	if self.at_war: 
+		hide_war_room()
+		return false
 	
 	if event.type == InputEvent.KEY and event.is_pressed():
 		self.gui_anim.play(\"press\")
@@ -324,8 +348,8 @@ func game_over(win = false):
 	Globals.set('last_score', self.score)
 	Globals.set('speed', calculate_average())
 	Globals.set('shrooms', self.shrooms)
-	if win: Globals.set('win', true)
-	else: Globals.set('win', false)
+	Globals.set('win', win)
+	self.game_anim.play('fade-out')
 
 func get_time(from):
 	return OS.get_ticks_msec() - from

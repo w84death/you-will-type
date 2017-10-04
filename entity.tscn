@@ -75,7 +75,7 @@ func die():
 [sub_resource type="Animation" id=2]
 
 resource/name = "die"
-length = 1.0
+length = 2.0
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -83,7 +83,7 @@ tracks/0/path = NodePath("g/spr:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 0.5, 1 ),
+"times": FloatArray( 0, 1.5, 2 ),
 "transitions": FloatArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 2, -4 ), Vector2( 2, -12 ), Vector2( 2, -24 ) ]
@@ -93,7 +93,7 @@ tracks/1/path = NodePath("g/spr:visibility/opacity")
 tracks/1/interp = 1
 tracks/1/imported = false
 tracks/1/keys = {
-"times": FloatArray( 0, 0.5, 1 ),
+"times": FloatArray( 0, 1.5, 2 ),
 "transitions": FloatArray( 1, 1, 1 ),
 "update": 0,
 "values": [ 1.0, 1.0, 0.0 ]
